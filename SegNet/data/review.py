@@ -1,10 +1,22 @@
+#!/usr/bin/env python3
+# -*- encoding: utf-8 -*-
+'''
+Created on   :2021/03/27 23:42:40
+@author      :Caihao (Chris) Cui
+@file        :review.py
+@content     :xxx xxx xxx
+@version     :0.1
+@License :   (C)Copyright 2020 MIT
+'''
+
+# here put the import lib
+
 import shutil
 import numpy as np
 import sys
 from skimage import io
 from tqdm import tqdm
 import pandas as pd
-import logging
 from pathlib import Path
 
 # from PIL import Image
@@ -13,6 +25,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 # issue solved by (OSError: image file is truncated) https://github.com/eriklindernoren/PyTorch-YOLOv3/issues/162
 
 
+import logging
 logging.basicConfig(level=logging.INFO,
                     # filename='output.log',
                     datefmt='%Y/%m/%d %H:%M:%S',
@@ -133,13 +146,13 @@ def get_train_valid_split(df_data, df_dir, ratio = 0.75):
     return df_train, df_valid
 
 
-def data_review(image_dir, mask_dir, intrim_data_dir, processed_data_dir, test_dir):
+def data_review(image_dir, mask_dir, intrim_data_dir, processed_data_dir, test_dir, ratio = 0.75):
 
     # read and split data for training and validation
     img_files, mask_files  = get_imagepair_lists(image_dir, mask_dir )
     df_data = get_imagepair_df_basic(img_files, mask_dir)
     save_df(df_data, intrim_data_dir, 'df_data.csv')
-    df_train, df_valid = get_train_valid_split(df_data, processed_data_dir, ratio = 0.75)
+    df_train, df_valid = get_train_valid_split(df_data, processed_data_dir, ratio = ratio)
 
     # read the test data
     img_test_files = get_image_list(test_dir, '*.jpg')
@@ -167,4 +180,3 @@ def label_review(labels_path, top_label_id, processed_data_dir):
     df_label= df_label.set_index('label_id')
     save_df(df_label, processed_data_dir, 'df_label.csv')
     return df_label
-    
