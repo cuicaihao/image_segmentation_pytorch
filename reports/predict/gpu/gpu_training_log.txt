@@ -1,0 +1,330 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+Loading personal and system profiles took 1535ms.
+(base) ➜  image_segmentation_pytorch git:(master) conda activate base
+(base) ➜  image_segmentation_pytorch git:(master) python .\model_train.py
+2021/03/29 09:28:08-INFO - Using device cuda
+2021/03/29 09:28:08-INFO - Network:
+        3 input channels
+        23 output channels (classes)
+        Bilinear upscaling
+2021/03/29 09:28:11-INFO - Creating dataset with 240 examples
+2021/03/29 09:28:11-INFO - Creating dataset with 80 examples
+2021/03/29 09:28:11-INFO - Starting training:
+        Epochs:          2
+        Batch size:      2
+        Learning rate:   0.01
+        Training size:   240
+        Validation size: 80
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.1
+
+Epoch 1/2:  18%|███████████████▊                                                                      | 44/240 [00:23<01:45,  1.86img/s, loss (batc
+Traceback (most recent call last):
+  File ".\model_train.py", line 271, in <module>
+    train_net(net=net,
+  File ".\model_train.py", line 115, in train_net
+    for batch in train_loader:
+  File "D:\Miniconda3\lib\site-packages\torch\utils\data\dataloader.py", line 435, in __next__
+    data = self._next_data()
+  File "D:\Miniconda3\lib\site-packages\torch\utils\data\dataloader.py", line 1065, in _next_data
+    return self._process_data(data)
+  File "D:\Miniconda3\lib\site-packages\torch\utils\data\dataloader.py", line 1111, in _process_data
+    data.reraise()
+  File "D:\Miniconda3\lib\site-packages\torch\_utils.py", line 428, in reraise
+    raise self.exc_type(msg)
+OSError: Caught OSError in DataLoader worker process 2.
+Original Traceback (most recent call last):
+  File "D:\Miniconda3\lib\site-packages\torch\utils\data\_utils\worker.py", line 198, in _worker_loop
+    data = fetcher.fetch(index)
+  File "D:\Miniconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "D:\Miniconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "D:\GitHub\image_segmentation_pytorch\SegNet\data\dataset.py", line 85, in __getitem__
+    img = self.preprocess(img, self.scale, 'rgb')
+  File "D:\GitHub\image_segmentation_pytorch\SegNet\data\dataset.py", line 54, in preprocess
+    pil_img = pil_img.resize((newW, newH), Image.ANTIALIAS)
+  File "D:\Miniconda3\lib\site-packages\PIL\Image.py", line 1916, in resize
+    self.load()
+  File "D:\Miniconda3\lib\site-packages\PIL\ImageFile.py", line 259, in load
+    raise OSError(
+OSError: image file is truncated (23 bytes not processed)
+
+(base) ➜  image_segmentation_pytorch git:(master) python model_train.py -f checkpoints/CP_epoch10.pth
+2021/03/29 09:30:04-INFO - Using device cuda
+2021/03/29 09:30:04-INFO - Network:
+        3 input channels
+        23 output channels (classes)
+        Bilinear upscaling
+Traceback (most recent call last):
+  File "model_train.py", line 268, in <module>
+    torch.load(args.load, map_location=device)
+  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 581, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 230, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 211, in __init__
+    super(_open_file, self).__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: 'checkpoints/CP_epoch10.pth'
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f checkpoints/CP_epoch10.pth
+2021/03/29 09:30:43-INFO - Using device cuda
+2021/03/29 09:30:43-INFO - Network:
+        3 input channels
+        23 output channels (classes)
+        Bilinear upscaling
+Traceback (most recent call last):
+  File "model_train.py", line 268, in <module>
+    torch.load(args.load, map_location=device)
+  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 581, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 230, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 211, in __init__
+    super(_open_file, self).__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: 'checkpoints/CP_epoch10.pth'
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f models/CP_epoch10.pth
+>>
+2021/03/29 09:30:57-INFO - Using device cuda
+2021/03/29 09:30:57-INFO - Network:
+        3 input channels
+        23 output channels (classes)
+        Bilinear upscaling
+2021/03/29 09:30:59-INFO - Model loaded from models/CP_epoch10.pth
+2021/03/29 09:30:59-INFO - Creating dataset with 10 examples
+2021/03/29 09:30:59-INFO - Creating dataset with 2 examples
+2021/03/29 09:30:59-INFO - Starting training:
+        Epochs:          2
+        Batch size:      2
+        Learning rate:   0.01
+        Training size:   10
+        Validation size: 2
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.1
+
+Epoch 1/2:  40%|███████████████████████████████████▏                                                    | 4/10 [00:07<00:11,  1.97s/img, loss (batc
+Traceback (most recent call last):
+  File "model_train.py", line 275, in <module>
+    train_net(net=net,
+  File "model_train.py", line 156, in train_net
+    val_score = eval_net(net, val_loader, device)
+  File "model_train.py", line 219, in eval_net
+    tot += dice_coeff_multilabel(true_masks,
+  File "D:\GitHub\image_segmentation_pytorch\SegNet\features\build_features.py", line 38, in dice_coeff_multilabel
+    y_true = y_true.numpy()
+TypeError: can't convert cuda:0 device type tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f models/CP_epoch10.pth
+>>
+2021/03/29 09:33:16-INFO - Using device cuda
+2021/03/29 09:33:16-INFO - Network:
+        3 input channels
+        23 output channels (classes)
+        Bilinear upscaling
+2021/03/29 09:33:17-INFO - Model loaded from models/CP_epoch10.pth
+2021/03/29 09:33:17-INFO - Creating dataset with 10 examples
+2021/03/29 09:33:17-INFO - Creating dataset with 2 examples
+2021/03/29 09:33:17-INFO - Starting training:
+        Epochs:          2
+        Batch size:      2
+        Learning rate:   0.01
+        Training size:   10
+        Validation size: 2
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.1
+
+Epoch 1/2:  40%|███████████████████████████████████▏                                                    | 4/10 [00:04<00:06,  1.06s/img, loss (batc021/03/29 09:33:25-INFO - Validation Dice Coeff multilabel: 0.04254393390992916
+Epoch 1/2:  80%|██████████████████████████████████████████████████████████████████████▍                 | 8/10 [00:08<00:01,  1.09img/s, loss (batc021/03/29 09:33:28-INFO - Validation Dice Coeff multilabel: 0.06328344638160228
+Epoch 1/2: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:12<00:00,  1.22s/img, loss (batc
+2021/03/29 09:33:29-INFO - Created checkpoint directory
+2021/03/29 09:33:30-INFO - Checkpoint 1 saved !
+Epoch 2/2:  20%|█████████████████▊                                                                       | 2/10 [00:03<00:15,  1.92s/img, loss (bat021/03/29 09:33:36-INFO - Validation Dice Coeff multilabel: 0.04195435701671942
+Epoch 2/2:  60%|████████████████████████████████████████████████████▊                                   | 6/10 [00:07<00:04,  1.09s/img, loss (batc021/03/29 09:33:40-INFO - Validation Dice Coeff multilabel: 0.058459992802697425
+Epoch 2/2: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:11<00:00,  1.05img/s, loss (batc021/03/29 09:33:44-INFO - Validation Dice Coeff multilabel: 0.06566773532089655
+Epoch 2/2: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:14<00:00,  1.48s/img, loss (batc
+2021/03/29 09:33:44-INFO - Checkpoint 2 saved !
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f models/CP_epoch10.pth
+>>
+2021/03/29 09:36:12-INFO - Using device cuda
+2021/03/29 09:36:12-INFO - Network:
+        3 input channels
+        23 output channels (classes)
+        Bilinear upscaling
+2021/03/29 09:36:14-INFO - Model loaded from models/CP_epoch10.pth
+2021/03/29 09:36:14-INFO - Creating dataset with 240 examples
+2021/03/29 09:36:14-INFO - Creating dataset with 80 examples
+2021/03/29 09:36:14-INFO - Starting training:
+        Epochs:          5
+        Batch size:      4
+        Learning rate:   0.01
+        Training size:   240
+        Validation size: 80
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.1
+
+Epoch 1/5:   0%|                                                                                                                  | 0/240 [00:12<?,
+Traceback (most recent call last):
+  File "model_train.py", line 275, in <module>
+    train_net(net=net,
+  File "model_train.py", line 129, in train_net
+    masks_pred = net(imgs)
+  File "D:\Miniconda3\lib\site-packages\torch\nn\modules\module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "D:\GitHub\image_segmentation_pytorch\SegNet\models\unet.py", line 40, in forward
+    x = self.up4(x, x1)
+  File "D:\Miniconda3\lib\site-packages\torch\nn\modules\module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "D:\GitHub\image_segmentation_pytorch\SegNet\models\unet.py", line 133, in forward
+    x = torch.cat([x2, x1], dim=1)
+RuntimeError: CUDA out of memory. Tried to allocate 470.00 MiB (GPU 0; 4.00 GiB total capacity; 2.58 GiB already allocated; 270.29 MiB free; 2.59 Ged in total by PyTorch)
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f models/CP_epoch10.pth
+>>
+2021/03/29 09:36:51-INFO - Using device cuda
+2021/03/29 09:36:51-INFO - Network:
+        3 input channels
+        23 output channels (classes)
+        Bilinear upscaling
+2021/03/29 09:36:52-INFO - Model loaded from models/CP_epoch10.pth
+2021/03/29 09:36:52-INFO - Creating dataset with 240 examples
+2021/03/29 09:36:52-INFO - Creating dataset with 80 examples
+2021/03/29 09:36:52-INFO - Starting training:
+        Epochs:          5
+        Batch size:      2
+        Learning rate:   0.01
+        Training size:   240
+        Validation size: 80
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.1
+
+Epoch 1/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [01:06<01:06,  1.81img/s, loss (batc
+Traceback (most recent call last):
+  File "model_train.py", line 275, in <module>
+    train_net(net=net,
+  File "model_train.py", line 156, in train_net
+    val_score = eval_net(net, val_loader, device)
+  File "model_train.py", line 207, in eval_net
+    for batch in loader:
+  File "D:\Miniconda3\lib\site-packages\torch\utils\data\dataloader.py", line 435, in __next__
+    data = self._next_data()
+  File "D:\Miniconda3\lib\site-packages\torch\utils\data\dataloader.py", line 475, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "D:\Miniconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "D:\Miniconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "D:\GitHub\image_segmentation_pytorch\SegNet\data\dataset.py", line 85, in __getitem__
+    img = self.preprocess(img, self.scale, 'rgb')
+  File "D:\GitHub\image_segmentation_pytorch\SegNet\data\dataset.py", line 54, in preprocess
+    pil_img = pil_img.resize((newW, newH), Image.ANTIALIAS)
+  File "D:\Miniconda3\lib\site-packages\PIL\Image.py", line 1916, in resize
+    self.load()
+  File "D:\Miniconda3\lib\site-packages\PIL\ImageFile.py", line 259, in load
+    raise OSError(
+OSError: image file is truncated (45 bytes not processed)
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f models/CP_epoch10.pth
+>>
+2021/03/29 09:39:51-INFO - Using device cuda
+2021/03/29 09:39:51-INFO - Network:
+        3 input channels
+        23 output channels (classes)
+        Bilinear upscaling
+2021/03/29 09:39:53-INFO - Model loaded from models/CP_epoch10.pth
+2021/03/29 09:39:53-INFO - Creating dataset with 240 examples
+2021/03/29 09:39:53-INFO - Creating dataset with 80 examples
+2021/03/29 09:39:53-INFO - Starting training:
+        Epochs:          5
+        Batch size:      2
+        Learning rate:   0.01
+        Training size:   240
+        Validation size: 80
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.1
+
+Epoch 1/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:46<00:41,  2.89img/s, loss (batc021/03/29 09:41:52-INFO - Validation Dice Coeff multilabel: 0.05903169760999596
+Epoch 1/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:41<00:00,  2.74img/s, loss (batc021/03/29 09:43:43-INFO - Validation Dice Coeff multilabel: 0.0592525490484915
+Epoch 1/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:51<00:00,  1.04img/s, loss (batc
+2021/03/29 09:43:44-INFO - Checkpoint 1 saved !
+Epoch 2/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:48<00:43,  2.78img/s, loss (batc021/03/29 09:45:43-INFO - Validation Dice Coeff multilabel: 0.05836622903255101
+Epoch 2/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:39<00:00,  2.76img/s, loss (batc021/03/29 09:47:32-INFO - Validation Dice Coeff multilabel: 0.061714471118605875
+Epoch 2/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:48<00:00,  1.05img/s, loss (batc
+2021/03/29 09:47:33-INFO - Checkpoint 2 saved !
+Epoch 3/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:45<00:38,  3.10img/s, loss (batc021/03/29 09:49:24-INFO - Validation Dice Coeff multilabel: 0.06028643464223081
+Epoch 3/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:29<00:00,  3.12img/s, loss (batc021/03/29 09:51:21-INFO - Validation Dice Coeff multilabel: 0.05902381759742363
+Epoch 3/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:48<00:00,  1.05img/s, loss (batc
+2021/03/29 09:51:21-INFO - Checkpoint 3 saved !
+Epoch 4/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:46<00:38,  3.12img/s, loss (batc021/03/29 09:53:15-INFO - Validation Dice Coeff multilabel: 0.05934008254451051
+Epoch 4/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:32<00:00,  3.12img/s, loss (batc021/03/29 09:54:59-INFO - Validation Dice Coeff multilabel: 0.060324651089350645
+Epoch 4/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:38<00:00,  1.10img/s, loss (batc
+2021/03/29 09:55:00-INFO - Checkpoint 4 saved !
+Epoch 5/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:45<00:38,  3.11img/s, loss (batc021/03/29 09:56:51-INFO - Validation Dice Coeff multilabel: 0.06083402027450715
+Epoch 5/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:29<00:00,  3.11img/s, loss (batc021/03/29 09:58:35-INFO - Validation Dice Coeff multilabel: 0.06039760107299125
+Epoch 5/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:35<00:00,  1.11img/s, loss (batc
+2021/03/29 09:58:35-INFO - Checkpoint 5 saved !
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_predict.py -i data/raw/train/images/382.jpg -o output_test_GPU.png -m checkpoints/.pth -s 0.1 -v 
+2021/03/29 10:03:39-INFO - Starting Predict:     
+        model:          checkpoints/CP_epoch5.pth
+        input:          ['data/raw/train/images/382.jpg']
+        output:         ['output_test_GPU.png']
+        viz:            True
+        nosave:        False
+        maskthreshold: 0.5
+        scale:          0.1
+
+2021/03/29 10:03:39-INFO - Loading model checkpoints/CP_epoch5.pth
+2021/03/29 10:03:40-INFO - Using device cuda
+2021/03/29 10:03:41-INFO - Model loaded !
+2021/03/29 10:03:41-INFO - 
+Predicting image data/raw/train/images/382.jpg ...
+2021/03/29 10:03:43-INFO - Mask saved to output_test_GPU.png
+2021/03/29 10:03:43-INFO - Visualizing results for image data/raw/train/images/382.jpg, close to continue ...
+2021/03/29 10:03:48-INFO - Save imagepair at reports/predict/image_pair_jet.png
+2021/03/29 10:04:06-INFO - Save imageoverlay at reports/predict/sample.png
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_predict.py -i data/raw/train/images/002.jpg -o output_test_002_GPU.png -m checkpoioch5.pth -s 0.1 -v
+2021/03/29 10:04:54-INFO - Starting Predict:
+        model:          checkpoints/CP_epoch5.pth
+        input:          ['data/raw/train/images/002.jpg']
+        output:         ['output_test_002_GPU.png']
+        viz:            True
+        nosave:        False
+        maskthreshold: 0.5
+        scale:          0.1
+
+2021/03/29 10:04:54-INFO - Loading model checkpoints/CP_epoch5.pth
+2021/03/29 10:04:55-INFO - Using device cuda
+2021/03/29 10:04:56-INFO - Model loaded !
+2021/03/29 10:04:57-INFO - 
+Predicting image data/raw/train/images/002.jpg ...
+Traceback (most recent call last):
+  File "model_predict.py", line 167, in <module>
+    img = Image.open(fn)
+  File "D:\Miniconda3\lib\site-packages\PIL\Image.py", line 2904, in open
+    fp = builtins.open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'data/raw/train/images/002.jpg'
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_predict.py -i data/raw/test/images/002.jpg -o output_test_002_GPU.png -m checkpoinch5.pth -s 0.1 -v
+2021/03/29 10:05:17-INFO - Starting Predict:
+        model:          checkpoints/CP_epoch5.pth
+        input:          ['data/raw/test/images/002.jpg']
+        output:         ['output_test_002_GPU.png']
+        viz:            True
+        nosave:        False
+        maskthreshold: 0.5
+        scale:          0.1
+
+2021/03/29 10:05:17-INFO - Loading model checkpoints/CP_epoch5.pth
+2021/03/29 10:05:18-INFO - Using device cuda
+2021/03/29 10:05:20-INFO - Model loaded !
+2021/03/29 10:05:20-INFO -
+Predicting image data/raw/test/images/002.jpg ...
+2021/03/29 10:05:21-INFO - Mask saved to output_test_002_GPU.png
+2021/03/29 10:05:21-INFO - Visualizing results for image data/raw/test/images/002.jpg, close to continue ...
+2021/03/29 10:05:27-INFO - Save imagepair at reports/predict/image_pair_jet.png
+2021/03/29 10:05:50-INFO - Save imageoverlay at reports/predict/sample.png
+(base) ➜  image_segmentation_pytorch git:(master) ✗

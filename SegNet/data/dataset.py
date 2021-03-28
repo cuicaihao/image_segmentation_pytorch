@@ -10,6 +10,7 @@ Created on   :2021/03/27 23:55:30
 '''
 
 # here put the import lib
+from PIL import ImageFile
 import torch
 from torch.utils.data import Dataset
 import logging
@@ -25,7 +26,9 @@ logging.basicConfig(level=logging.INFO,
 # format='%(levelname)s-%(message)s')
 logger = logging.getLogger(__name__)
 
-LABEL_number = 23 # enforce the index
+LABEL_number = 23  # enforce the index
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 class BasicDataset(Dataset):
@@ -63,7 +66,7 @@ class BasicDataset(Dataset):
         if Imagetype == 'rgb':
             if img_processed.max() > 1.0:
                 img_processed = img_processed / 255
-        elif Imagetype == 'mask': 
+        elif Imagetype == 'mask':
             # ! To keep the label index min/max same as the original mask
             if img_processed.max() > LABEL_number-1:
                 if img_processed.dtype == np.uint8:
@@ -76,9 +79,9 @@ class BasicDataset(Dataset):
 
     def __getitem__(self, i):
         idx = self.ids[i]
-        mask_file = self.mask_list[idx] 
-        img_file =  self.img_list[idx] 
- 
+        mask_file = self.mask_list[idx]
+        img_file = self.img_list[idx]
+
         mask = Image.open(mask_file)
         img = Image.open(img_file)
 

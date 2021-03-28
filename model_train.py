@@ -53,10 +53,11 @@ LABEL_number = 23
 # DEBUG = True
 DEBUG = False
 
+
 def train_net(net,
               device,
               epochs=5,
-              batch_size=4,
+              batch_size=2,
               lr=0.001,
               save_cp=True,
               img_scale=0.1):
@@ -65,10 +66,10 @@ def train_net(net,
     df_train = pd.read_csv(df_train_path)
     df_valid = pd.read_csv(df_valid_path)
     if not DEBUG:
-        data_train = BasicDataset(df_train, scale = img_scale)
-        data_valid = BasicDataset(df_valid, scale = img_scale )
+        data_train = BasicDataset(df_train, scale=img_scale)
+        data_valid = BasicDataset(df_valid, scale=img_scale)
     else:
-    # Small dataset for debugging and test
+        # Small dataset for debugging and test
         df_train_small = df_train.head(10)
         df_valid_small = df_valid.head(2)
         data_train = BasicDataset(df_train_small, scale=img_scale)
@@ -144,7 +145,7 @@ def train_net(net,
                 pbar.update(imgs.shape[0])
                 global_step += 1
 
-                if global_step % (n_train // (2 * batch_size)) == 0:
+                if global_step % (n_train // (1 * batch_size)) == 0:
                     for tag, value in net.named_parameters():
                         tag = tag.replace('.', '/')
                         writer.add_histogram(
@@ -159,7 +160,8 @@ def train_net(net,
                         'learning_rate', optimizer.param_groups[0]['lr'], global_step)
                     if net.n_classes > 1:
                         # logging.info('Validation cross entropy: {}'.format(val_score))
-                        logging.info('Validation Dice Coeff multilabel: {}'.format(val_score))
+                        logging.info(
+                            'Validation Dice Coeff multilabel: {}'.format(val_score))
                         writer.add_scalar('Loss/val', val_score, global_step)
                     else:
                         logging.info(
@@ -175,9 +177,10 @@ def train_net(net,
                     else:
                         writer.add_images(
                             'masks/true', true_masks, global_step)
-                        masks_pred_temp = torch.argmax(masks_pred, dim=1, keepdim=True).type(torch.long)  # same as true_masks
-                        writer.add_images(  
-                            'masks/pred', masks_pred_temp, global_step)          
+                        masks_pred_temp = torch.argmax(masks_pred, dim=1, keepdim=True).type(
+                            torch.long)  # same as true_masks
+                        writer.add_images(
+                            'masks/pred', masks_pred_temp, global_step)
 
         if save_cp:
             try:
@@ -191,7 +194,6 @@ def train_net(net,
 
     writer.add_graph(net, imgs)
     writer.close()
-
 
 
 def eval_net(net, loader, device):
@@ -214,7 +216,8 @@ def eval_net(net, loader, device):
             if net.n_classes > 1:
                 true_masks = torch.squeeze(true_masks, dim=1)
                 # tot += F.cross_entropy(mask_pred, true_masks).item()
-                tot += dice_coeff_multilabel(true_masks, mask_pred, LABEL_number)
+                tot += dice_coeff_multilabel(true_masks,
+                                             mask_pred, LABEL_number)
             else:
                 pred = torch.sigmoid(mask_pred)
                 pred = (pred > 0.5).float()
@@ -223,10 +226,11 @@ def eval_net(net, loader, device):
     net.train()
     return tot / n_val
 
+
 def get_args():
     parser = argparse.ArgumentParser(description='Train the UNet on images and target masks',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-e', '--epochs', metavar='E', type=int, default = 2,
+    parser.add_argument('-e', '--epochs', metavar='E', type=int, default=5,
                         help='Number of epochs', dest='epochs')
     parser.add_argument('-b', '--batch-size', metavar='B', type=int, nargs='?', default=2,
                         help='Batch size', dest='batchsize')
@@ -283,3 +287,4 @@ if __name__ == '__main__':
             os._exit(0)
 
 # python model_train.py -f checkpoints/CP_epoch2.pth
+# python model_train.py -f models/CP_epoch10.pth
