@@ -2,7 +2,7 @@
 
 Author: Caihao Cui
 
-Lastest Update Time: 28-Mar-2021
+Lastest Update Time: 29-Mar-2021
 
 Created Time: Sat 27-Mar-2021
 
@@ -10,10 +10,9 @@ This repo is on solving image segmentation task by building a convolutional neur
 
 ![feature Image](reports/figures/feature_image.jpg) 
  
-
 The basic function will be like: Y = f(X) 
 
-where X is a RGB image, Y is a mask image with intergers represent a number of objects.  
+where X is a RGB image, Y is a mask image with integers represent a number of objects.  
 
 - Review the [project organization](project_structure.txt) 
 - Find details on the [Tutorial.ipynb](Tutorial.ipynb)
@@ -116,7 +115,7 @@ In this case,  there are three labels missing labels in the dataset, they will b
 
 --------
  
-## Sample Preparation]
+## Sample Preparation
 
 The basic step of the model develop is to create a framework we can keep upgrading the design and bring new ideas into practices.
 Thus the `SegNet` contains the low level modules for this goals.
@@ -289,7 +288,7 @@ Thus, it is getting better.
  
 
 
-### GPU Experimental Results\
+### GPU Experimental Results
 
 This repo is tested on PC with GTX1050Ti(4GB). Details can be found in the following [logs](reports/predict/gpu/gpu_training_log.txt).
 
@@ -433,12 +432,11 @@ tests/test_visualization.py::test_visualization PASSED                          
 - [PyTorch Docs https://pytorch.org/docs/stable/index.html](https://pytorch.org/docs/stable/index.html)
 - [Pillow Docs https://pillow.readthedocs.io/en/stable/index.html](https://pillow.readthedocs.io/en/stable/index.html)
 
-
 ## Appendix 
 
-What defines a good projects in DL/ML application?
+What defines a good DL/ML application?
 
-Personally speaking, a good application must consider the following features. 
+Personally speaking, a good application should contain the following features. 
 
 - Data: from data access (Security) and IO to sample selection/preparation.
 - Model: build / management / deployment (distribution).

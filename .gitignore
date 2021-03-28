@@ -91,3 +91,4 @@ target/
 runs/
 checkpoints/
 INTERRUPTED.pth
+README.pdf
