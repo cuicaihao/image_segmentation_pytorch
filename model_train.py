@@ -26,6 +26,8 @@ from SegNet.data.dataset import BasicDataset
 from SegNet.models.dice_loss import dice_coeff
 # from SegNet.models.dice_loss import  CrossEntropyLoss2d
 
+from SegNet.features.build_features import dice_coeff_multilabel
+
 import pandas as pd
 
 from torch.utils.tensorboard import SummaryWriter
@@ -48,6 +50,9 @@ dir_checkpoint = 'checkpoints/'
 
 LABEL_number = 23
 
+# DEBUG = True
+DEBUG = False
+
 def train_net(net,
               device,
               epochs=5,
@@ -59,14 +64,15 @@ def train_net(net,
     # # Full large dataset
     df_train = pd.read_csv(df_train_path)
     df_valid = pd.read_csv(df_valid_path)
-    data_train = BasicDataset(df_train, scale = 0.5 )
-    data_valid = BasicDataset(df_valid, scale = 0.5 )
-
+    if not DEBUG:
+        data_train = BasicDataset(df_train, scale = img_scale)
+        data_valid = BasicDataset(df_valid, scale = img_scale )
+    else:
     # Small dataset for debugging and test
-    # df_train_small = df_train.head(20)
-    # df_valid_small = df_valid.head(5)
-    # data_train = BasicDataset(df_train_small, scale=img_scale)
-    # data_valid = BasicDataset(df_valid_small, scale=img_scale)
+        df_train_small = df_train.head(10)
+        df_valid_small = df_valid.head(2)
+        data_train = BasicDataset(df_train_small, scale=img_scale)
+        data_valid = BasicDataset(df_valid_small, scale=img_scale)
 
     train_loader = DataLoader(
         data_train, batch_size=batch_size, shuffle=True, num_workers=4, pin_memory=True)
@@ -152,8 +158,8 @@ def train_net(net,
                     writer.add_scalar(
                         'learning_rate', optimizer.param_groups[0]['lr'], global_step)
                     if net.n_classes > 1:
-                        logging.info(
-                            'Validation cross entropy: {}'.format(val_score))
+                        # logging.info('Validation cross entropy: {}'.format(val_score))
+                        logging.info('Validation Dice Coeff multilabel: {}'.format(val_score))
                         writer.add_scalar('Loss/val', val_score, global_step)
                     else:
                         logging.info(
@@ -207,14 +213,13 @@ def eval_net(net, loader, device):
 
             if net.n_classes > 1:
                 true_masks = torch.squeeze(true_masks, dim=1)
-                # criterion = nn.CrossEntropyLoss()
-                tot += F.cross_entropy(mask_pred, true_masks).item()
+                # tot += F.cross_entropy(mask_pred, true_masks).item()
+                tot += dice_coeff_multilabel(true_masks, mask_pred, LABEL_number)
             else:
                 pred = torch.sigmoid(mask_pred)
                 pred = (pred > 0.5).float()
                 tot += dice_coeff(pred, true_masks).item()
             pbar.update()
-
     net.train()
     return tot / n_val
 

@@ -8,12 +8,16 @@ Created Time: Sat 27-Mar-2021
 
 This repo is on solving image segmentation task by building a convolutional neural network (UNet) to output a pixel-wise mask of the input image. 
 
-The basic function will be like: $ Y_{H, W} = Model(X_{3, H, W})$, 
-    
-where $X$ is a RGB image, $Y$ is a mask image with interger represent one type of objects.  
+![feature Image](reports/figures/feature_image.jpg) 
+ 
 
-[Project Organization](project_structure.txt) 
-Find details on the [Tutorial.ipynb](Tutorial.ipynb)
+The basic function will be like: Y = f(X) 
+
+where X is a RGB image, Y is a mask image with intergers represent a number of objects.  
+
+- Review the [project organization](project_structure.txt) 
+- Find details on the [Tutorial.ipynb](Tutorial.ipynb)
+- Or just review the [HTML report](reports/Tutorial.html)
 
 ## Requriments
 Please use `conda` or `pipenv` create a vitural environment for R&D.
@@ -272,6 +276,12 @@ Predicting image data/raw/train/images/382.jpg ...
 
 You will find the output images at the `reprots/predict` folder.
 
+You can find the current model is clearly under-fitting. But it tends to classify the input image into two categories:
+- 0 : tree
+- 2 : other-vegetatio
+Thus, it is getting better.
+
+
 
 ![Sample](reports/predict/image_pair_jet.png)
 
@@ -291,7 +301,7 @@ And then visit ([http://localhost:6006/ ](http://localhost:6006/)) to see all th
 ![TFB_01_Scalars.jpg](reports/TFB_screenshots/TFB_01_Scalars.jpg)reports/TFB_screenshots/
 ![TFB_02_Images.jpg](reports/TFB_screenshots/TFB_02_Images.jpg)
 ![TFB_03_Graphs.jpg](Treports/TFB_screenshots/FB_03_Graphs.jpg)
-![FB_04_Distributions.jpg](reports/TFB_screenshots/TFB_04_Distributions.jpg)
+![TFB_04_Distributions.jpg](reports/TFB_screenshots/TFB_04_Distributions.jpg)
 ![TFB_05_Histograms.jpg](reports/TFB_screenshots/TFB_05_Histograms.jpg)
 ![TFB_06_Timeseries.jpg](reports/TFB_screenshots/TFB_06_Timeseries.jpg)
 
@@ -302,19 +312,24 @@ And then visit ([http://localhost:6006/ ](http://localhost:6006/)) to see all th
 
 - Finish the Unit Test scripts in `tests`. Thus, `pytest` can be applied to validate the function changes. For example, the following command will runn all the function  to verify the changes, which is important for CI/CD.
 ```bash
-$  pytest
-============================= test session starts =============================
-platform darwin -- Python 3.8.3, pytest-6.1.1, py-1.10.0, pluggy-0.13.1
+$ pytest -v
+===================================== test session starts ======================================
+platform darwin -- Python 3.8.3, pytest-6.1.1, py-1.10.0, pluggy-0.13.1 -- /Users/caihaocui/opt/miniconda3/bin/python
+cachedir: .pytest_cache
 rootdir: /Users/caihaocui/Documents/GitHub/image_segmentation_pytorch
 plugins: dash-1.17.0, anyio-2.0.2
-collected 4 items                                                             
+collected 8 items                                                                              
 
-tests/test_data.py .                                                    [ 25%]
-tests/test_feature.py .                                                 [ 50%]
-tests/test_models.py .                                                  [ 75%]
-tests/test_visualization.py .                                           [100%]
+tests/test_data.py::test_data PASSED                                                     [ 12%]
+tests/test_feature.py::test_features PASSED                                              [ 25%]
+tests/test_feature.py::test_2d_to_3d PASSED                                              [ 37%]
+tests/test_feature.py::test_dice_coef PASSED                                             [ 50%]
+tests/test_feature.py::test_dice_coeff_multilabel PASSED                                 [ 62%]
+tests/test_models.py::test_models PASSED                                                 [ 75%]
+tests/test_models.py::test_dice PASSED                                                   [ 87%]
+tests/test_visualization.py::test_visualization PASSED                                   [100%]
 
-============================== 4 passed in 0.19s ==============================
+====================================== 8 passed in 0.64s =======================================
 ```
 - Error Analysis with Multi-labels Dice coefficient (in developing)
 - Update model structure and feature modules 

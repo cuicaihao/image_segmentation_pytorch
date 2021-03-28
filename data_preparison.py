@@ -1,3 +1,16 @@
+#!/usr/bin/env python3
+# -*- encoding: utf-8 -*-
+'''
+Created on   :2021/03/28 18:37:31
+@author      :Caihao (Chris) Cui
+@file        :data_preparison.py
+@content     :xxx xxx xxx
+@version     :0.1
+@License :   (C)Copyright 2020 MIT
+'''
+
+# here put the import lib
+
 from SegNet.data.review import data_review, label_review
 
 # data dir / types

@@ -1,120 +1,50 @@
-.
-├── INTERRUPTED.pth
-├── LICENSE
-├── Makefile
-├── README.md
-├── SegNet
-│   ├── __init__.py
-│   ├── __pycache__
-│   │   └── __init__.cpython-38.pyc
-│   ├── data
-│   │   ├── __init__.py
-│   │   ├── __pycache__
-│   │   ├── dataset.py
-│   │   ├── make_dataset.py
-│   │   └── review.py
-│   ├── features
-│   │   ├── __init__.py
-│   │   ├── __pycache__
-│   │   └── build_features.py
-│   ├── models
-│   │   ├── __init__.py
-│   │   ├── __pycache__
-│   │   ├── dice_loss.py
-│   │   └── unet.py
-│   └── visualization
-│       ├── __init__.py
-│       ├── __pycache__
-│       └── visualize.py
-├── Tutorial.ipynb
-├── __pycache__
-│   ├── eval_model.cpython-38.pyc
-│   ├── model_predict.cpython-38.pyc
-│   └── test_environment.cpython-38-pytest-6.1.1.pyc
-├── checkpoints
-│   ├── CP_epoch1.pth
-│   ├── CP_epoch2.pth
-│   ├── CP_epoch3.pth
-│   └── CP_epoch4.pth
-├── data
-│   ├── external
-│   ├── interim
-│   │   ├── df_data.csv
-│   │   └── df_data.csv.backup
-│   ├── processed
-│   │   ├── df_label.csv
-│   │   ├── df_label.csv.backup
-│   │   ├── df_test.csv
-│   │   ├── df_test.csv.backup
-│   │   ├── df_train.csv
-│   │   ├── df_train.csv.backup
-│   │   ├── df_valid.csv
-│   │   └── df_valid.csv.backup
-│   └── raw
-│       ├── labels.txt
-│       ├── test
-│       └── train
-├── docs
-│   ├── Makefile
-│   ├── commands.rst
-│   ├── conf.py
-│   ├── getting-started.rst
-│   ├── index.rst
-│   └── make.bat
-├── model_predict.py
-├── model_train.py
-├── models
-├── notebooks
-│   ├── DataReview.ipynb
-│   └── Untitled.ipynb
-├── output_test.png
-├── project_structure.txt
-├── references
-├── reports
-│   ├── figures
-│   │   ├── image_pair_gray.png
-│   │   ├── image_pair_jet.png
-│   │   └── sample.png
-│   ├── image_pair_jet.png
-│   ├── output_test.png
-│   ├── predict
-│   │   ├── image_pair_jet.png
-│   │   └── sample.png
-│   └── sample.png
-├── requirements.txt
-├── runs
-│   ├── Mar28_09-23-38_Caihaos-MiniLR_0.0001_BS_1_SCALE_0.1
-│   │   └── events.out.tfevents.1616883821.Caihaos-Mini.52386.0
-│   ├── Mar28_09-40-24_Caihaos-MiniLR_0.01_BS_4_SCALE_0.1
-│   │   └── events.out.tfevents.1616884827.Caihaos-Mini.71536.0
-│   ├── Mar28_10-56-12_Caihaos-MiniLR_0.01_BS_4_SCALE_0.1
-│   │   └── events.out.tfevents.1616889375.Caihaos-Mini.57318.0
-│   ├── Mar28_13-03-53_Caihaos-MiniLR_0.01_BS_4_SCALE_0.1
-│   │   └── events.out.tfevents.1616897036.Caihaos-Mini.97783.0
-│   ├── Mar28_13-25-19_Caihaos-MiniLR_0.01_BS_2_SCALE_0.1
-│   │   └── events.out.tfevents.1616898322.Caihaos-Mini.22568.0
-│   ├── Mar28_13-38-50_Caihaos-MiniLR_0.01_BS_2_SCALE_0.1
-│   │   └── events.out.tfevents.1616899133.Caihaos-Mini.37711.0
-│   ├── Mar28_13-41-26_Caihaos-MiniLR_0.01_BS_2_SCALE_0.1
-│   │   └── events.out.tfevents.1616899289.Caihaos-Mini.40633.0
-│   ├── Mar28_14-00-08_Caihaos-MiniLR_0.01_BS_2_SCALE_0.1
-│   │   └── events.out.tfevents.1616900411.Caihaos-Mini.62378.0
-│   ├── Mar28_16-04-37_Caihaos-MiniLR_0.01_BS_4_SCALE_0.1
-│   │   └── events.out.tfevents.1616907879.Caihaos-Mini.2519.0
-│   └── Mar28_16-18-20_Caihaos-MiniLR_0.01_BS_4_SCALE_0.1
-│       └── events.out.tfevents.1616908702.Caihaos-Mini.18666.0
-├── setup.py
-├── test_environment.py
-├── tests
-│   ├── __pycache__
-│   │   ├── test_data.cpython-38-pytest-6.1.1.pyc
-│   │   ├── test_feature.cpython-38-pytest-6.1.1.pyc
-│   │   ├── test_models.cpython-38-pytest-6.1.1.pyc
-│   │   └── test_visualization.cpython-38-pytest-6.1.1.pyc
-│   ├── test_data.py
-│   ├── test_feature.py
-│   ├── test_models.py
-│   └── test_visualization.py
-└── tox.ini
+Project Organization
+------------
 
-39 directories, 78 files
+    ├── LICENSE
+    ├── Makefile           <- Makefile with commands like `make data` or `make train`
+    ├── README.md          <- The top-level README for developers using this project.
+    ├── data
+    │   ├── external       <- Data from third party sources.
+    │   ├── interim        <- Intermediate data that has been transformed.
+    │   ├── processed      <- The final, canonical data sets for modeling.
+    │   └── raw            <- The original, immutable data dump.
+    │
+    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
+    │
+    ├── models             <- Trained and serialized models, model predictions, or model summaries
+    │
+    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
+    │                         the creator's initials, and a short `-` delimited description, e.g.
+    │                         `1.0-jqp-initial-data-exploration`.
+    │
+    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
+    │
+    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
+    │   └── figures        <- Generated graphics and figures to be used in reporting
+    │
+    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
+    │                         generated with `pip freeze > requirements.txt`
+    │
+    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
+    ├── src                <- Source code for use in this project.
+    │   ├── __init__.py    <- Makes src a Python module
+    │   │
+    │   ├── data           <- Scripts to download or generate data
+    │   │   └── make_dataset.py
+    │   │
+    │   ├── features       <- Scripts to turn raw data into features for modeling
+    │   │   └── build_features.py
+    │   │
+    │   ├── models         <- Scripts to train models and then use trained models to make
+    │   │   │                 predictions
+    │   │   ├── predict_model.py
+    │   │   └── train_model.py
+    │   │
+    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
+    │       └── visualize.py
+    │
+    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+
+
+--------
