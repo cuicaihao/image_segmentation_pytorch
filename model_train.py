@@ -79,7 +79,7 @@ def train_net(net,
         data_train, batch_size=batch_size, shuffle=True, num_workers=4, pin_memory=True)
 
     val_loader = DataLoader(data_valid, batch_size=batch_size, shuffle=False,
-                            num_workers=0, pin_memory=True, drop_last=False)
+                            num_workers=0, pin_memory=True, drop_last=True)
 
     writer = SummaryWriter(
         comment=f'LR_{lr}_BS_{batch_size}_SCALE_{img_scale}')
@@ -98,8 +98,10 @@ def train_net(net,
         Device:          {device.type}
         Images scaling:  {img_scale}
     ''')
-    optimizer = optim.RMSprop(net.parameters(), lr=lr,
-                              weight_decay=1e-8, momentum=0.9)
+    # optimizer = optim.RMSprop(net.parameters(), lr=lr,
+    #                           weight_decay=1e-8, momentum=0.9)
+    optimizer = optim.Adam(net.parameters(), lr=lr,
+                           weight_decay=1e-6)
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(
         optimizer, 'min' if net.n_classes > 1 else 'max', patience=2)
 
@@ -145,7 +147,8 @@ def train_net(net,
                 pbar.update(imgs.shape[0])
                 global_step += 1
 
-                if global_step % (n_train // (1 * batch_size)) == 0:
+                # if global_step % (n_train // (1 * batch_size)) == 0:
+                if global_step % (n_train) == 0:  # reduce validation times
                     for tag, value in net.named_parameters():
                         tag = tag.replace('.', '/')
                         writer.add_histogram(
@@ -159,9 +162,10 @@ def train_net(net,
                     writer.add_scalar(
                         'learning_rate', optimizer.param_groups[0]['lr'], global_step)
                     if net.n_classes > 1:
-                        # logging.info('Validation cross entropy: {}'.format(val_score))
                         logging.info(
-                            'Validation Dice Coeff multilabel: {}'.format(val_score))
+                            'Validation cross entropy: {}'.format(val_score))
+                        # logging.info(
+                        # 'Validation Dice Coeff multilabel: {}'.format(val_score))
                         writer.add_scalar('Loss/val', val_score, global_step)
                     else:
                         logging.info(
@@ -215,9 +219,9 @@ def eval_net(net, loader, device):
 
             if net.n_classes > 1:
                 true_masks = torch.squeeze(true_masks, dim=1)
-                # tot += F.cross_entropy(mask_pred, true_masks).item()
-                tot += dice_coeff_multilabel(true_masks,
-                                             mask_pred, LABEL_number)
+                tot += F.cross_entropy(mask_pred, true_masks).item()
+                # tot += dice_coeff_multilabel(true_masks,
+                #  mask_pred, LABEL_number)
             else:
                 pred = torch.sigmoid(mask_pred)
                 pred = (pred > 0.5).float()
@@ -234,7 +238,7 @@ def get_args():
                         help='Number of epochs', dest='epochs')
     parser.add_argument('-b', '--batch-size', metavar='B', type=int, nargs='?', default=2,
                         help='Batch size', dest='batchsize')
-    parser.add_argument('-l', '--learning-rate', metavar='LR', type=float, nargs='?', default=0.01,
+    parser.add_argument('-l', '--learning-rate', metavar='LR', type=float, nargs='?', default=0.001,
                         help='Learning rate', dest='lr')
     parser.add_argument('-f', '--load', dest='load', type=str, default=False,
                         help='Load model from a .pth file')
@@ -287,4 +291,5 @@ if __name__ == '__main__':
             os._exit(0)
 
 # python model_train.py -f checkpoints/CP_epoch2.pth
-# python model_train.py -f models/CP_epoch10.pth
+# python model_train.py -f models/CP_epoch5.pth -e 100
+# python model_train.py -f checkpoints/CP_epoch6.pth -e 100 -l 0.1
