@@ -35,13 +35,21 @@ This repo is develop with Python==3.8.3.
 
 ## TOC
 
-1. [Data Review](#data-review)
-2. [Sample Preparation](#sample-preparation)
-3. [Build Model](#build-model)
-4. [Manage Model](#manage-model)
-5. [Prediction](#prediction) 
-6. [TensorBoard](#tensorboard)
-7. [Next Step](#next-step)
+- [Image Segmentation with Deep ConvNets (PyTorch)](#image-segmentation-with-deep-convnets-pytorch)
+  - [Requriments](#requriments)
+  - [TOC](#toc)
+    - [Data Review](#data-review)
+  - [Sample Preparation](#sample-preparation)
+  - [Build Model](#build-model)
+  - [Manage Model](#manage-model)
+  - [Prediction](#prediction)
+    - [GPU Experimental Results](#gpu-experimental-results)
+  - [TensorBoard](#tensorboard)
+  - [Next Step](#next-step)
+  - [Disclaimer](#disclaimer)
+  - [References](#references)
+  - [Appendix](#appendix)
+  - [The End](#the-end)
 
 
 ### Data Review  
@@ -288,61 +296,6 @@ Thus, it is getting better.
 ### GPU Experimental Results
 
 This repo is tested on PC with GTX1050Ti(4GB). Details can be found in the following [logs](reports/predict/gpu/gpu_training_log.txt).
-
-```bash
-python model_train.py -f models/CP_epoch10.pth
->>
-2021/03/29 09:39:51-INFO - Using device cuda
-2021/03/29 09:39:51-INFO - Network:
-        3 input channels
-        23 output channels (classes)
-        Bilinear upscaling
-2021/03/29 09:39:53-INFO - Model loaded from models/CP_epoch10.pth
-2021/03/29 09:39:53-INFO - Creating dataset with 240 examples
-2021/03/29 09:39:53-INFO - Creating dataset with 80 examples
-2021/03/29 09:39:53-INFO - Starting training:
-        Epochs:          5
-        Batch size:      2
-        Learning rate:   0.01
-        Training size:   240
-        Validation size: 80
-        Checkpoints:     True
-        Device:          cuda
-        Images scaling:  0.1
-
-Epoch 1/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:46<00:41,  2.89img/s, loss (batc021/03/29 09:41:52-INFO - Validation Dice Coeff multilabel: 0.05903169760999596
-Epoch 1/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:41<00:00,  2.74img/s, loss (batc021/03/29 09:43:43-INFO - Validation Dice Coeff multilabel: 0.0592525490484915
-Epoch 1/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:51<00:00,  1.04img/s, loss (batc
-2021/03/29 09:43:44-INFO - Checkpoint 1 saved !
-...
-09:58:35-INFO - Validation Dice Coeff multilabel: 0.06039760107299125
-Epoch 5/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:35<00:00,  1.11img/s, loss (batc
-2021/03/29 09:58:35-INFO - Checkpoint 5 saved !
- 
-# Use the GPU trained model for prediction
-✗ python model_predict.py -i data/raw/test/images/002.jpg -o output_test_002_GPU.png -m checkpoints/CP_epoch5.pth -s 0.1 -v
-2021/03/29 10:05:17-INFO - Starting Predict:
-        model:          checkpoints/CP_epoch5.pth
-        input:          ['data/raw/test/images/002.jpg']
-        output:         ['output_test_002_GPU.png']
-        viz:            True
-        nosave:        False
-        maskthreshold: 0.5
-        scale:          0.1
-
-2021/03/29 10:05:17-INFO - Loading model checkpoints/CP_epoch5.pth
-2021/03/29 10:05:18-INFO - Using device cuda
-2021/03/29 10:05:20-INFO - Model loaded !
-2021/03/29 10:05:20-INFO -
-Predicting image data/raw/test/images/002.jpg ...
-2021/03/29 10:05:21-INFO - Mask saved to output_test_002_GPU.png
-2021/03/29 10:05:21-INFO - Visualizing results for image data/raw/test/images/002.jpg, close to continue ...
-2021/03/29 10:05:27-INFO - Save imagepair at reports/predict/image_pair_jet.png
-2021/03/29 10:05:50-INFO - Save imageoverlay at reports/predict/sample.png
-```
-
-The output I used the test image 002, here are the results.
-
 
 ![GPU Sample](reports/predict/gpu/image_pair_jet.png)
 

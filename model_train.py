@@ -50,9 +50,6 @@ dir_checkpoint = 'checkpoints/'
 
 LABEL_number = 23
 
-# DEBUG = True
-DEBUG = True
-
 
 def train_net(net,
               device,
@@ -60,7 +57,8 @@ def train_net(net,
               batch_size=2,
               lr=0.001,
               save_cp=True,
-              img_scale=0.1):
+              img_scale=0.1,
+              DEBUG=False):
 
     # # Full large dataset
     df_train = pd.read_csv(df_train_path)
@@ -82,7 +80,7 @@ def train_net(net,
                             num_workers=0, pin_memory=True, drop_last=True)
 
     writer = SummaryWriter(
-        comment=f'LR_{lr}_BS_{batch_size}_SCALE_{img_scale}')
+        comment=f'_EPOCH_{epochs}_LR_{lr}_BS_{batch_size}_SCALE_{img_scale}')
     global_step = 0
 
     n_train = len(data_train)
@@ -97,11 +95,12 @@ def train_net(net,
         Checkpoints:     {save_cp}
         Device:          {device.type}
         Images scaling:  {img_scale}
+        Debug:           {DEBUG} 
     ''')
-    # optimizer = optim.RMSprop(net.parameters(), lr=lr,
-    #                           weight_decay=1e-8, momentum=0.9)
-    optimizer = optim.Adam(net.parameters(), lr=lr,
-                           weight_decay=1e-6)
+    optimizer = optim.RMSprop(net.parameters(), lr=lr,
+                              weight_decay=1e-8, momentum=0.9)
+    # optimizer = optim.Adam(net.parameters(), lr=lr,
+    #                        weight_decay=1e-6)
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(
         optimizer, 'min' if net.n_classes > 1 else 'max', patience=2)
 
@@ -112,7 +111,8 @@ def train_net(net,
         # criterion = CrossEntropyLoss2d()
     else:
         criterion = nn.BCEWithLogitsLoss()
-
+    val_score_previous = 1000
+    train_score_previous = 1000
     for epoch in range(epochs):
         net.train()
         epoch_loss = 0
@@ -134,11 +134,11 @@ def train_net(net,
                 # masks_pred = F.softmax(masks_pred, dim=1)
                 # masks_pred = torch.argmax(masks_pred, dim=1)
                 loss = criterion(masks_pred, true_masks_temp)
+                train_score = loss.item()
+                epoch_loss += train_score
+                writer.add_scalar('Loss/train', train_score, global_step)
 
-                epoch_loss += loss.item()
-                writer.add_scalar('Loss/train', loss.item(), global_step)
-
-                pbar.set_postfix(**{'loss (batch)': loss.item()})
+                pbar.set_postfix(**{'loss (batch)': train_score})
 
                 optimizer.zero_grad()
                 loss.backward()
@@ -148,52 +148,63 @@ def train_net(net,
                 pbar.update(imgs.shape[0])
                 global_step += 1
 
-                # if global_step % (n_train // (1 * batch_size)) == 0:
-                if global_step % (n_train) == 0:  # reduce validation times
-                    for tag, value in net.named_parameters():
-                        tag = tag.replace('.', '/')
-                        writer.add_histogram(
-                            'weights/' + tag, value.data.cpu().numpy(), global_step)
-                        writer.add_histogram(
-                            'grads/' + tag, value.grad.data.cpu().numpy(), global_step)
-                    # validating the net
-                    val_score = eval_net(net, val_loader, device)
-                    # update learning rate
-                    scheduler.step(val_score)
-                    writer.add_scalar(
-                        'learning_rate', optimizer.param_groups[0]['lr'], global_step)
-                    if net.n_classes > 1:
-                        logging.info(
-                            'Validation cross entropy: {}'.format(val_score))
-                        # logging.info('Validation Dice Coeff multilabel: {}'.format(val_score))
-                        writer.add_scalar('Loss/val', val_score, global_step)
-                    else:
-                        logging.info(
-                            'Validation Dice Coeff: {}'.format(val_score))
-                        writer.add_scalar('Dice/val', val_score, global_step)
+        # if global_step % (n_train // (1 * batch_size)) == 0:
+        if (epoch + 1) % 5 == 0:  # every 5 epoch
+            for tag, value in net.named_parameters():
+                tag = tag.replace('.', '/')
+                writer.add_histogram(
+                    'weights/' + tag, value.data.cpu().numpy(), global_step)
+                writer.add_histogram(
+                    'grads/' + tag, value.grad.data.cpu().numpy(), global_step)
+            # validating the net
+            val_score = eval_net(net, val_loader, device)
+            # update learning rate
+            scheduler.step(val_score)
+            writer.add_scalar(
+                'learning_rate', optimizer.param_groups[0]['lr'], global_step)
+            if net.n_classes > 1:
+                logging.info(
+                    'Validation cross entropy: {}'.format(val_score))
+                # logging.info('Validation Dice Coeff multilabel: {}'.format(val_score))
+                writer.add_scalar('Loss/val', val_score, global_step)
+            else:
+                logging.info(
+                    'Validation Dice Coeff: {}'.format(val_score))
+                writer.add_scalar('Dice/val', val_score, global_step)
 
-                    writer.add_images('images', imgs, global_step)
-                    if net.n_classes == 1:
-                        writer.add_images(
-                            'masks/true', true_masks, global_step)
-                        writer.add_images(
-                            'masks/pred', torch.sigmoid(masks_pred) > 0.5, global_step)
-                    else:
-                        writer.add_images(
-                            'masks/true', true_masks, global_step)
-                        masks_pred_temp = torch.argmax(masks_pred, dim=1, keepdim=True).type(
-                            torch.long)  # same as true_masks
-                        writer.add_images(
-                            'masks/pred', masks_pred_temp, global_step)
-        if save_cp:
-            try:
-                os.mkdir(dir_checkpoint)
-                logging.info('Created checkpoint directory')
-            except OSError:
-                pass
-            torch.save(net.state_dict(),
-                       dir_checkpoint + f'CP_epoch{epoch + 1}.pth')
-            logging.info(f'Checkpoint {epoch + 1} saved !')
+            writer.add_images('images', imgs, global_step)
+            if net.n_classes == 1:
+                writer.add_images(
+                    'masks/true', true_masks, global_step)
+                writer.add_images(
+                    'masks/pred', torch.sigmoid(masks_pred) > 0.5, global_step)
+            else:
+                writer.add_images(
+                    'masks/true', true_masks, global_step)
+                masks_pred_temp = torch.argmax(masks_pred, dim=1, keepdim=True).type(
+                    torch.long)  # same as true_masks
+                writer.add_images(
+                    'masks/pred', masks_pred_temp, global_step)
+
+            if save_cp:  # reduce saved models
+                try:
+                    os.mkdir(dir_checkpoint)
+                    logging.info('Created checkpoint directory')
+                except OSError:
+                    pass
+                if val_score <= val_score_previous or train_score <= train_score_previous:
+                    logging.info(
+                        f'Previous Train: {train_score_previous} Valid: {val_score_previous}!')
+                    logging.info(
+                        f'Current  Train: {train_score}          Valid: {val_score}!')
+                    torch.save(net.state_dict(),
+                               dir_checkpoint + f'CP_epoch{epoch + 1}.pth')
+                    logging.info(f'Checkpoint {epoch + 1} saved !')
+                    # update the last performance for later comparison.
+                    val_score_previous = val_score
+                    train_score_previous = train_score
+                else:
+                    logging.info(f'Checkpoint {epoch + 1} it not saved !')
 
     writer.add_graph(net, imgs)
     writer.close()
@@ -232,13 +243,13 @@ def eval_net(net, loader, device):
 def get_args():
     parser = argparse.ArgumentParser(description='Train the UNet on images and target masks',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-e', '--epochs', metavar='E', type=int, default=5,
+    parser.add_argument('-e', '--epochs', metavar='E', type=int, default=10,
                         help='Number of epochs', dest='epochs')
     parser.add_argument('-b', '--batch-size', metavar='B', type=int, nargs='?', default=2,
                         help='Batch size', dest='batchsize')
-    parser.add_argument('-l', '--learning-rate', metavar='LR', type=float, nargs='?', default=0.001,
+    parser.add_argument('-l', '--learning-rate', metavar='LR', type=float, nargs='?', default=0.01,
                         help='Learning rate', dest='lr')
-    parser.add_argument('-f', '--load', dest='load', type=str, default=False,
+    parser.add_argument('-f', '--load', dest='load', type=str, default="INTERRUPTED.pth",
                         help='Load model from a .pth file')
     parser.add_argument('-s', '--scale', dest='scale', type=float, default=0.1,
                         help='Downscaling factor of the images')
@@ -273,13 +284,18 @@ if __name__ == '__main__':
 
     net.to(device=device)
 
+    if args.epochs < 20:
+        DEBUG = True
+    else:
+        DEBUG = False
     try:
         train_net(net=net,
                   epochs=args.epochs,
                   batch_size=args.batchsize,
                   lr=args.lr,
                   device=device,
-                  img_scale=args.scale)
+                  img_scale=args.scale,
+                  DEBUG=DEBUG)
     except KeyboardInterrupt:
         torch.save(net.state_dict(), 'INTERRUPTED.pth')
         logging.info('Saved interrupt')
@@ -287,7 +303,3 @@ if __name__ == '__main__':
             sys.exit(0)
         except SystemExit:
             os._exit(0)
-
-# python model_train.py -f checkpoints/CP_epoch2.pth
-# python model_train.py -f models/CP_epoch5.pth -e 100
-# python model_train.py -f checkpoints/CP_epoch6.pth -e 100 -l 0.1

@@ -1,20 +1,15 @@
-Windows PowerShell
-Copyright (C) Microsoft Corporation. All rights reserved.
 
-Try the new cross-platform PowerShell https://aka.ms/pscore6
-
-Loading personal and system profiles took 1535ms.
-(base) ➜  image_segmentation_pytorch git:(master) conda activate base
-(base) ➜  image_segmentation_pytorch git:(master) python .\model_train.py
-2021/03/29 09:28:08-INFO - Using device cuda
-2021/03/29 09:28:08-INFO - Network:
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f .\checkpoints\CP_epoch10.pth -e 200
+2021/03/30 12:16:50-INFO - Using device cuda
+2021/03/30 12:16:50-INFO - Network:
         3 input channels
         23 output channels (classes)
         Bilinear upscaling
-2021/03/29 09:28:11-INFO - Creating dataset with 240 examples
-2021/03/29 09:28:11-INFO - Creating dataset with 80 examples
-2021/03/29 09:28:11-INFO - Starting training:
-        Epochs:          2
+2021/03/30 12:16:51-INFO - Model loaded from .\checkpoints\CP_epoch10.pth
+2021/03/30 12:16:51-INFO - Creating dataset with 240 examples
+2021/03/30 12:16:51-INFO - Creating dataset with 80 examples
+2021/03/30 12:16:51-INFO - Starting training:
+        Epochs:          200
         Batch size:      2
         Learning rate:   0.01
         Training size:   240
@@ -22,83 +17,61 @@ Loading personal and system profiles took 1535ms.
         Checkpoints:     True
         Device:          cuda
         Images scaling:  0.1
+        Debug:           False
 
-Epoch 1/2:  18%|███████████████▊                                                                      | 44/240 [00:23<01:45,  1.86img/s, loss (batc
-Traceback (most recent call last):
-  File ".\model_train.py", line 271, in <module>
-    train_net(net=net,
-  File ".\model_train.py", line 115, in train_net
-    for batch in train_loader:
-  File "D:\Miniconda3\lib\site-packages\torch\utils\data\dataloader.py", line 435, in __next__
-    data = self._next_data()
-  File "D:\Miniconda3\lib\site-packages\torch\utils\data\dataloader.py", line 1065, in _next_data
-    return self._process_data(data)
-  File "D:\Miniconda3\lib\site-packages\torch\utils\data\dataloader.py", line 1111, in _process_data
-    data.reraise()
-  File "D:\Miniconda3\lib\site-packages\torch\_utils.py", line 428, in reraise
-    raise self.exc_type(msg)
-OSError: Caught OSError in DataLoader worker process 2.
-Original Traceback (most recent call last):
-  File "D:\Miniconda3\lib\site-packages\torch\utils\data\_utils\worker.py", line 198, in _worker_loop
-    data = fetcher.fetch(index)
-  File "D:\Miniconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in fetch
-    data = [self.dataset[idx] for idx in possibly_batched_index]
-  File "D:\Miniconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in <listcomp>
-    data = [self.dataset[idx] for idx in possibly_batched_index]
-  File "D:\GitHub\image_segmentation_pytorch\SegNet\data\dataset.py", line 85, in __getitem__
-    img = self.preprocess(img, self.scale, 'rgb')
-  File "D:\GitHub\image_segmentation_pytorch\SegNet\data\dataset.py", line 54, in preprocess
-    pil_img = pil_img.resize((newW, newH), Image.ANTIALIAS)
-  File "D:\Miniconda3\lib\site-packages\PIL\Image.py", line 1916, in resize
-    self.load()
-  File "D:\Miniconda3\lib\site-packages\PIL\ImageFile.py", line 259, in load
-    raise OSError(
-OSError: image file is truncated (23 bytes not processed)
-
-(base) ➜  image_segmentation_pytorch git:(master) python model_train.py -f checkpoints/CP_epoch10.pth
-2021/03/29 09:30:04-INFO - Using device cuda
-2021/03/29 09:30:04-INFO - Network:
+Epoch 1/200: 100%|████████████████████████████████████████████████████████████████████████| 240/240 [01:40<00:00,  2.39img/s, loss (batch)=2.38]
+Epoch 2/200: 100%|████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:46<00:00,  2.26img/s, loss (batc
+Epoch 3/200: 100%|████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:33<00:00,  2.56img/s, loss (batc
+Epoch 4/200: 100%|████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batc
+Epoch 5/200: 100%|████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.88img/s, loss (batc
+2021/03/30 12:25:42-INFO - Validation cross entropy: 2.7333421051502227
+2021/03/30 12:25:42-INFO - Checkpoint 5 saved !
+Epoch 6/200: 100%|████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.89img/s, loss (batc
+Epoch 7/200: 100%|████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.88img/s, loss (batc
+Epoch 8/200: 100%|████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss (batc
+Epoch 9/200: 100%|████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.88img/s, loss (batc
+Epoch 10/200: 100%|███████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss (batc
+2021/03/30 12:33:40-INFO - Validation cross entropy: 2.9013073086738586
+2021/03/30 12:33:41-INFO - Checkpoint 10 it not saved !
+Epoch 11/200: 100%|███████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.88img/s, loss (batc
+Epoch 12/200: 100%|███████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss (batc
+Epoch 13/200: 100%|███████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batc
+Epoch 14/200: 100%|██████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.88img/s, loss (b
+Epoch 15/200: 100%|███████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss (batc
+2021/03/30 12:41:39-INFO - Validation cross entropy: 2.658849835395813
+2021/03/30 12:41:39-INFO - Checkpoint 15 saved !
+Epoch 16/200: 100%|███████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.88img/s, loss (batc
+Epoch 17/200: 100%|███████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.88img/s, loss (batc
+Epoch 18/200: 100%|███████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss (batc
+Epoch 19/200: 100%|███████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batc
+Epoch 20/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01
+2021/03/30 12:49:38-INFO - Validation cross entropy: 2.702924484014511
+2021/03/30 12:49:39-INFO - Checkpoint 20 it not saved !
+Epoch 21/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01
+Epoch 22/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01
+Epoch 23/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01
+Epoch 24/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01
+Epoch 25/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01
+,  2.86img/s, loss (batch)=1.12]
+Epoch 30/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01,  2.86img/s, loss (batch)=1.15]
+2021/03/30 13:05:39-INFO - Validation cross entropy: 2.74393709897995
+2021/03/30 13:05:40-INFO - Checkpoint 30 it not saved !
+Epoch 31/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01,  2.87img/s, loss (batch)=1.22]
+Epoch 32/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01,  2.86img/s, loss (batch)=1.75]
+Epoch 33/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01,  2.86img/s, loss (batch)=1.03]
+Epoch 34/200:  40%|██████████████████████████████████████████████▊                                                                      | 96/240 [00,  2.48img/s, loss (batch)=1.24]
+2021/03/30 13:10:30-INFO - Saved interrupt
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py
+2021/03/30 13:15:14-INFO - Using device cuda
+2021/03/30 13:15:14-INFO - Network: 
         3 input channels
         23 output channels (classes)
         Bilinear upscaling
-Traceback (most recent call last):
-  File "model_train.py", line 268, in <module>
-    torch.load(args.load, map_location=device)
-  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 581, in load
-    with _open_file_like(f, 'rb') as opened_file:
-  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 230, in _open_file_like
-    return _open_file(name_or_buffer, mode)
-  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 211, in __init__
-    super(_open_file, self).__init__(open(name, mode))
-FileNotFoundError: [Errno 2] No such file or directory: 'checkpoints/CP_epoch10.pth'
-(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f checkpoints/CP_epoch10.pth
-2021/03/29 09:30:43-INFO - Using device cuda
-2021/03/29 09:30:43-INFO - Network:
-        3 input channels
-        23 output channels (classes)
-        Bilinear upscaling
-Traceback (most recent call last):
-  File "model_train.py", line 268, in <module>
-    torch.load(args.load, map_location=device)
-  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 581, in load
-    with _open_file_like(f, 'rb') as opened_file:
-  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 230, in _open_file_like
-    return _open_file(name_or_buffer, mode)
-  File "D:\Miniconda3\lib\site-packages\torch\serialization.py", line 211, in __init__
-    super(_open_file, self).__init__(open(name, mode))
-FileNotFoundError: [Errno 2] No such file or directory: 'checkpoints/CP_epoch10.pth'
-(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f models/CP_epoch10.pth
->>
-2021/03/29 09:30:57-INFO - Using device cuda
-2021/03/29 09:30:57-INFO - Network:
-        3 input channels
-        23 output channels (classes)
-        Bilinear upscaling
-2021/03/29 09:30:59-INFO - Model loaded from models/CP_epoch10.pth
-2021/03/29 09:30:59-INFO - Creating dataset with 10 examples
-2021/03/29 09:30:59-INFO - Creating dataset with 2 examples
-2021/03/29 09:30:59-INFO - Starting training:
-        Epochs:          2
+2021/03/30 13:15:16-INFO - Model loaded from INTERRUPTED.pth
+2021/03/30 13:15:16-INFO - Creating dataset with 10 examples
+2021/03/30 13:15:16-INFO - Creating dataset with 2 examples
+2021/03/30 13:15:16-INFO - Starting training:
+        Epochs:          10
         Batch size:      2
         Learning rate:   0.01
         Training size:   10
@@ -106,95 +79,33 @@ FileNotFoundError: [Errno 2] No such file or directory: 'checkpoints/CP_epoch10.
         Checkpoints:     True
         Device:          cuda
         Images scaling:  0.1
+        Debug:           True
 
-Epoch 1/2:  40%|███████████████████████████████████▏                                                    | 4/10 [00:07<00:11,  1.97s/img, loss (batc
-Traceback (most recent call last):
-  File "model_train.py", line 275, in <module>
-    train_net(net=net,
-  File "model_train.py", line 156, in train_net
-    val_score = eval_net(net, val_loader, device)
-  File "model_train.py", line 219, in eval_net
-    tot += dice_coeff_multilabel(true_masks,
-  File "D:\GitHub\image_segmentation_pytorch\SegNet\features\build_features.py", line 38, in dice_coeff_multilabel
-    y_true = y_true.numpy()
-TypeError: can't convert cuda:0 device type tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.
-(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f models/CP_epoch10.pth
->>
-2021/03/29 09:33:16-INFO - Using device cuda
-2021/03/29 09:33:16-INFO - Network:
+Epoch 1/10: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:06<00:00,  1.43img/s, loss (batc
+Epoch 2/10: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:05<00:00,  1.67img/s, loss (batc
+Epoch 3/10: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:06<00:00,  1.62img/s, loss (batch)h)=1.59]                                                                                                                                            h)
+Epoch 4/10: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:06<00:00,  1.62img/s, loss (batch)h)=1.63]
+Epoch 5/10: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:06<00:00,  1.59img/s, loss (batch)=1.51]                                                                                                                                            ch
+2021/03/30 13:15:50-INFO - Validation cross entropy: 2.8221449851989746                                                                             ch
+2021/03/30 13:15:50-INFO - Checkpoint 5 saved !                                                                                                     ch
+Epoch 6/10: 100%|████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:06<00:00,  1.59img/s, loss (bath)ch)=1.2]                                                                                                                                            h)
+Epoch 7/10: 100%|████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:06<00:00,  1.61img/s, loss (batch)=1.8]
+Epoch 8/10: 100%|████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:06<00:00,  1.55img/s, loss (batch)=1.9]
+Epoch 9/10: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:06<00:00,  1.48img/s, loss (batch)=1.46]
+Epoch 10/10: 100%|██████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:06<00:00,  1.54img/s, loss (batch)=1.25]
+2021/03/30 13:16:25-INFO - Validation cross entropy: 2.891011953353882
+2021/03/30 13:16:25-INFO - Checkpoint 10 saved !
+(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f .\checkpoints\CP_epoch10.pth -e 200
+2021/03/30 13:24:45-INFO - Using device cuda
+2021/03/30 13:24:45-INFO - Network:
         3 input channels
         23 output channels (classes)
         Bilinear upscaling
-2021/03/29 09:33:17-INFO - Model loaded from models/CP_epoch10.pth
-2021/03/29 09:33:17-INFO - Creating dataset with 10 examples
-2021/03/29 09:33:17-INFO - Creating dataset with 2 examples
-2021/03/29 09:33:17-INFO - Starting training:
-        Epochs:          2
-        Batch size:      2
-        Learning rate:   0.01
-        Training size:   10
-        Validation size: 2
-        Checkpoints:     True
-        Device:          cuda
-        Images scaling:  0.1
-
-Epoch 1/2:  40%|███████████████████████████████████▏                                                    | 4/10 [00:04<00:06,  1.06s/img, loss (batc021/03/29 09:33:25-INFO - Validation Dice Coeff multilabel: 0.04254393390992916
-Epoch 1/2:  80%|██████████████████████████████████████████████████████████████████████▍                 | 8/10 [00:08<00:01,  1.09img/s, loss (batc021/03/29 09:33:28-INFO - Validation Dice Coeff multilabel: 0.06328344638160228
-Epoch 1/2: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:12<00:00,  1.22s/img, loss (batc
-2021/03/29 09:33:29-INFO - Created checkpoint directory
-2021/03/29 09:33:30-INFO - Checkpoint 1 saved !
-Epoch 2/2:  20%|█████████████████▊                                                                       | 2/10 [00:03<00:15,  1.92s/img, loss (bat021/03/29 09:33:36-INFO - Validation Dice Coeff multilabel: 0.04195435701671942
-Epoch 2/2:  60%|████████████████████████████████████████████████████▊                                   | 6/10 [00:07<00:04,  1.09s/img, loss (batc021/03/29 09:33:40-INFO - Validation Dice Coeff multilabel: 0.058459992802697425
-Epoch 2/2: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:11<00:00,  1.05img/s, loss (batc021/03/29 09:33:44-INFO - Validation Dice Coeff multilabel: 0.06566773532089655
-Epoch 2/2: 100%|███████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:14<00:00,  1.48s/img, loss (batc
-2021/03/29 09:33:44-INFO - Checkpoint 2 saved !
-(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f models/CP_epoch10.pth
->>
-2021/03/29 09:36:12-INFO - Using device cuda
-2021/03/29 09:36:12-INFO - Network:
-        3 input channels
-        23 output channels (classes)
-        Bilinear upscaling
-2021/03/29 09:36:14-INFO - Model loaded from models/CP_epoch10.pth
-2021/03/29 09:36:14-INFO - Creating dataset with 240 examples
-2021/03/29 09:36:14-INFO - Creating dataset with 80 examples
-2021/03/29 09:36:14-INFO - Starting training:
-        Epochs:          5
-        Batch size:      4
-        Learning rate:   0.01
-        Training size:   240
-        Validation size: 80
-        Checkpoints:     True
-        Device:          cuda
-        Images scaling:  0.1
-
-Epoch 1/5:   0%|                                                                                                                  | 0/240 [00:12<?,
-Traceback (most recent call last):
-  File "model_train.py", line 275, in <module>
-    train_net(net=net,
-  File "model_train.py", line 129, in train_net
-    masks_pred = net(imgs)
-  File "D:\Miniconda3\lib\site-packages\torch\nn\modules\module.py", line 727, in _call_impl
-    result = self.forward(*input, **kwargs)
-  File "D:\GitHub\image_segmentation_pytorch\SegNet\models\unet.py", line 40, in forward
-    x = self.up4(x, x1)
-  File "D:\Miniconda3\lib\site-packages\torch\nn\modules\module.py", line 727, in _call_impl
-    result = self.forward(*input, **kwargs)
-  File "D:\GitHub\image_segmentation_pytorch\SegNet\models\unet.py", line 133, in forward
-    x = torch.cat([x2, x1], dim=1)
-RuntimeError: CUDA out of memory. Tried to allocate 470.00 MiB (GPU 0; 4.00 GiB total capacity; 2.58 GiB already allocated; 270.29 MiB free; 2.59 Ged in total by PyTorch)
-(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f models/CP_epoch10.pth
->>
-2021/03/29 09:36:51-INFO - Using device cuda
-2021/03/29 09:36:51-INFO - Network:
-        3 input channels
-        23 output channels (classes)
-        Bilinear upscaling
-2021/03/29 09:36:52-INFO - Model loaded from models/CP_epoch10.pth
-2021/03/29 09:36:52-INFO - Creating dataset with 240 examples
-2021/03/29 09:36:52-INFO - Creating dataset with 80 examples
-2021/03/29 09:36:52-INFO - Starting training:
-        Epochs:          5
+2021/03/30 13:24:46-INFO - Model loaded from .\checkpoints\CP_epoch10.pth
+2021/03/30 13:24:46-INFO - Creating dataset with 240 examples
+2021/03/30 13:24:46-INFO - Creating dataset with 80 examples
+2021/03/30 13:24:46-INFO - Starting training:
+        Epochs:          200
         Batch size:      2
         Learning rate:   0.01
         Training size:   240
@@ -202,129 +113,344 @@ RuntimeError: CUDA out of memory. Tried to allocate 470.00 MiB (GPU 0; 4.00 GiB 
         Checkpoints:     True
         Device:          cuda
         Images scaling:  0.1
+        Debug:           False
 
-Epoch 1/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [01:06<01:06,  1.81img/s, loss (batc
-Traceback (most recent call last):
-  File "model_train.py", line 275, in <module>
-    train_net(net=net,
-  File "model_train.py", line 156, in train_net
-    val_score = eval_net(net, val_loader, device)
-  File "model_train.py", line 207, in eval_net
-    for batch in loader:
-  File "D:\Miniconda3\lib\site-packages\torch\utils\data\dataloader.py", line 435, in __next__
-    data = self._next_data()
-  File "D:\Miniconda3\lib\site-packages\torch\utils\data\dataloader.py", line 475, in _next_data
-    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
-  File "D:\Miniconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in fetch
-    data = [self.dataset[idx] for idx in possibly_batched_index]
-  File "D:\Miniconda3\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in <listcomp>
-    data = [self.dataset[idx] for idx in possibly_batched_index]
-  File "D:\GitHub\image_segmentation_pytorch\SegNet\data\dataset.py", line 85, in __getitem__
-    img = self.preprocess(img, self.scale, 'rgb')
-  File "D:\GitHub\image_segmentation_pytorch\SegNet\data\dataset.py", line 54, in preprocess
-    pil_img = pil_img.resize((newW, newH), Image.ANTIALIAS)
-  File "D:\Miniconda3\lib\site-packages\PIL\Image.py", line 1916, in resize
-    self.load()
-  File "D:\Miniconda3\lib\site-packages\PIL\ImageFile.py", line 259, in load
-    raise OSError(
-OSError: image file is truncated (45 bytes not processed)
-(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_train.py -f models/CP_epoch10.pth
->>
-2021/03/29 09:39:51-INFO - Using device cuda
-2021/03/29 09:39:51-INFO - Network:
-        3 input channels
-        23 output channels (classes)
-        Bilinear upscaling
-2021/03/29 09:39:53-INFO - Model loaded from models/CP_epoch10.pth
-2021/03/29 09:39:53-INFO - Creating dataset with 240 examples
-2021/03/29 09:39:53-INFO - Creating dataset with 80 examples
-2021/03/29 09:39:53-INFO - Starting training:
-        Epochs:          5
-        Batch size:      2
-        Learning rate:   0.01
-        Training size:   240
-        Validation size: 80
-        Checkpoints:     True
-        Device:          cuda
-        Images scaling:  0.1
-
-Epoch 1/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:46<00:41,  2.89img/s, loss (batc021/03/29 09:41:52-INFO - Validation Dice Coeff multilabel: 0.05903169760999596
-Epoch 1/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:41<00:00,  2.74img/s, loss (batc021/03/29 09:43:43-INFO - Validation Dice Coeff multilabel: 0.0592525490484915
-Epoch 1/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:51<00:00,  1.04img/s, loss (batc
-2021/03/29 09:43:44-INFO - Checkpoint 1 saved !
-Epoch 2/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:48<00:43,  2.78img/s, loss (batc021/03/29 09:45:43-INFO - Validation Dice Coeff multilabel: 0.05836622903255101
-Epoch 2/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:39<00:00,  2.76img/s, loss (batc021/03/29 09:47:32-INFO - Validation Dice Coeff multilabel: 0.061714471118605875
-Epoch 2/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:48<00:00,  1.05img/s, loss (batc
-2021/03/29 09:47:33-INFO - Checkpoint 2 saved !
-Epoch 3/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:45<00:38,  3.10img/s, loss (batc021/03/29 09:49:24-INFO - Validation Dice Coeff multilabel: 0.06028643464223081
-Epoch 3/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:29<00:00,  3.12img/s, loss (batc021/03/29 09:51:21-INFO - Validation Dice Coeff multilabel: 0.05902381759742363
-Epoch 3/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:48<00:00,  1.05img/s, loss (batc
-2021/03/29 09:51:21-INFO - Checkpoint 3 saved !
-Epoch 4/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:46<00:38,  3.12img/s, loss (batc021/03/29 09:53:15-INFO - Validation Dice Coeff multilabel: 0.05934008254451051
-Epoch 4/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:32<00:00,  3.12img/s, loss (batc021/03/29 09:54:59-INFO - Validation Dice Coeff multilabel: 0.060324651089350645
-Epoch 4/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:38<00:00,  1.10img/s, loss (batc
-2021/03/29 09:55:00-INFO - Checkpoint 4 saved !
-Epoch 5/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:45<00:38,  3.11img/s, loss (batc021/03/29 09:56:51-INFO - Validation Dice Coeff multilabel: 0.06083402027450715
-Epoch 5/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:29<00:00,  3.11img/s, loss (batc021/03/29 09:58:35-INFO - Validation Dice Coeff multilabel: 0.06039760107299125
-Epoch 5/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:35<00:00,  1.11img/s, loss (batc
-2021/03/29 09:58:35-INFO - Checkpoint 5 saved !
-(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_predict.py -i data/raw/train/images/382.jpg -o output_test_GPU.png -m checkpoints/.pth -s 0.1 -v 
-2021/03/29 10:03:39-INFO - Starting Predict:     
-        model:          checkpoints/CP_epoch5.pth
+Epoch 1/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:25<00:00,  2.82img/s, loss (batch)=1.59] 
+Epoch 2/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.94] 
+Epoch 3/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batch)=1.31] 
+Epoch 4/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=2.15] 
+Epoch 5/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (batch)=1.39] 
+2021/03/30 13:32:50-INFO - Validation cross entropy: 2.74427444934845
+2021/03/30 13:32:50-INFO - Previous Train: 1000 Valid: 1000!
+2021/03/30 13:32:50-INFO - Current  Train: 1.388748288154602          Valid: 2.74427444934845!
+2021/03/30 13:32:50-INFO - Checkpoint 5 saved !
+Epoch 6/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batch)=1.59] 
+Epoch 7/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (batch)=1.52] 
+Epoch 8/200: 100%|████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (batch)=1.2] 
+Epoch 9/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.61] 
+Epoch 10/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.2] 
+2021/03/30 13:40:52-INFO - Validation cross entropy: 2.7043952345848083
+2021/03/30 13:40:53-INFO - Previous Train: 1.388748288154602 Valid: 2.74427444934845!
+2021/03/30 13:40:53-INFO - Current  Train: 1.2005139589309692          Valid: 2.7043952345848083!
+2021/03/30 13:40:53-INFO - Checkpoint 10 saved !
+Epoch 11/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss (batch)=1.54] 
+Epoch 12/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batch)=1.31] 
+Epoch 13/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.82img/s, loss (batch)=1.28] 
+Epoch 14/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batch)=1.24] 
+Epoch 15/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.36] 
+2021/03/30 13:48:56-INFO - Validation cross entropy: 2.900267392396927
+2021/03/30 13:48:57-INFO - Checkpoint 15 it not saved !
+Epoch 16/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.6] 
+Epoch 17/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batch)=1.29] 
+Epoch 18/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.1] 
+Epoch 19/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.22] 
+Epoch 20/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.83img/s, loss (batch)=1.25] 
+2021/03/30 13:57:00-INFO - Validation cross entropy: 2.7219235360622407
+2021/03/30 13:57:00-INFO - Checkpoint 20 it not saved !
+Epoch 21/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.88img/s, loss (batch)=1.99] 
+Epoch 22/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batch)=1.26] 
+Epoch 23/200: 100%|█████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.83img/s, loss (batch)=0.974] 
+Epoch 24/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.49]
+Epoch 25/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batch)=1.42]
+2021/03/30 14:05:03-INFO - Validation cross entropy: 2.7837654888629912
+2021/03/30 14:05:03-INFO - Checkpoint 25 it not saved !
+Epoch 26/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss (batch)=1.66]
+Epoch 27/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.7]
+Epoch 28/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.11] 
+Epoch 29/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.64] 
+Epoch 30/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batch)=1.54] 
+2021/03/30 14:13:05-INFO - Validation cross entropy: 2.6635357677936553
+2021/03/30 14:13:06-INFO - Previous Train: 1.2005139589309692 Valid: 2.7043952345848083!
+2021/03/30 14:13:06-INFO - Current  Train: 1.543735146522522          Valid: 2.6635357677936553!
+2021/03/30 14:13:06-INFO - Checkpoint 30 saved !
+Epoch 31/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss (batch)=1.16] 
+Epoch 32/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.25] 
+Epoch 33/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.07] 
+Epoch 34/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.83img/s, loss (batch)=1.15] 
+Epoch 35/200: 100%|█████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (batch)=0.924] 
+2021/03/30 14:21:09-INFO - Validation cross entropy: 2.678081303834915
+2021/03/30 14:21:10-INFO - Previous Train: 1.543735146522522 Valid: 2.6635357677936553!
+2021/03/30 14:21:10-INFO - Current  Train: 0.9236475229263306          Valid: 2.678081303834915!
+2021/03/30 14:21:10-INFO - Checkpoint 35 saved !
+Epoch 36/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batch)=1.59] 
+Epoch 37/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batch)=1.07] 
+Epoch 38/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.28] 
+Epoch 39/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.22] 
+Epoch 40/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:26<00:00,  2.78img/s, loss (batch)=1.15] 
+2021/03/30 14:29:18-INFO - Validation cross entropy: 2.657838004827499
+2021/03/30 14:29:18-INFO - Previous Train: 0.9236475229263306 Valid: 2.678081303834915!
+2021/03/30 14:29:18-INFO - Current  Train: 1.1503031253814697          Valid: 2.657838004827499!
+2021/03/30 14:29:18-INFO - Checkpoint 40 saved !
+Epoch 41/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (batch)=1.71]
+Epoch 42/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.34]
+Epoch 43/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.09]
+Epoch 44/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (batch)=1.41]
+Epoch 45/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (batch)=1.17]
+2021/03/30 14:37:22-INFO - Validation cross entropy: 2.6746208012104034
+2021/03/30 14:37:23-INFO - Checkpoint 45 it not saved !
+Epoch 46/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.11]
+Epoch 47/200: 100%|█████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=0.891]
+Epoch 48/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (batch)=1.16]
+Epoch 49/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.25]
+Epoch 50/200: 100%|█████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (batch)=0.858]
+2021/03/30 14:45:27-INFO - Validation cross entropy: 2.6701771140098574
+2021/03/30 14:45:27-INFO - Previous Train: 1.1503031253814697 Valid: 2.657838004827499!
+2021/03/30 14:45:27-INFO - Current  Train: 0.8581569194793701          Valid: 2.6701771140098574!
+2021/03/30 14:45:27-INFO - Checkpoint 50 saved !
+Epoch 51/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (batch)=1.04]
+Epoch 52/200: 100%|██████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (batch)=1.11]
+Epoch 53/200: 100%|███████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=1.1]
+Epoch 54/200: 100%|█████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (batch)=0.756]
+Epoch 55/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (b
+2021/03/30 14:53:30-INFO - Validation cross entropy: 2.6605654656887054
+2021/03/30 14:53:31-INFO - Previous Train: 0.8581569194793701 Valid: 2.6701771140098574!
+2021/03/30 14:53:31-INFO - Current  Train: 1.011873722076416          Valid: 2.6605654656887054!
+2021/03/30 14:53:31-INFO - Checkpoint 55 saved !
+Epoch 56/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (b
+Epoch 57/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (b
+Epoch 58/200: 100%|███████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (ba
+Epoch 59/200: 100%|███████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (ba
+Epoch 60/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (b
+2021/03/30 15:01:34-INFO - Validation cross entropy: 2.6655314326286317
+2021/03/30 15:01:35-INFO - Checkpoint 60 it not saved !
+Epoch 61/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (b
+Epoch 62/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (
+Epoch 63/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (b
+Epoch 64/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (b
+Epoch 65/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (b
+2021/03/30 15:09:37-INFO - Validation cross entropy: 2.6722994267940523
+2021/03/30 15:09:37-INFO - Checkpoint 65 it not saved !
+Epoch 66/200: 100%|███████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss (ba
+Epoch 67/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (b
+Epoch 68/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (b
+Epoch 69/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (b
+Epoch 70/200: 100%|███████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (ba
+2021/03/30 15:17:40-INFO - Validation cross entropy: 2.6635196566581727
+2021/03/30 15:17:41-INFO - Previous Train: 1.011873722076416 Valid: 2.6605654656887054!
+2021/03/30 15:17:41-INFO - Current  Train: 0.8654844760894775          Valid: 2.6635196566581727!
+2021/03/30 15:17:41-INFO - Checkpoint 70 saved !
+Epoch 71/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (b
+Epoch 72/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (b
+Epoch 73/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.83img/s, loss (b
+Epoch 74/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (b
+Epoch 75/200: 100%|███████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:25<00:00,  2.82img/s, loss (ba
+2021/03/30 15:25:44-INFO - Validation cross entropy: 2.6642853796482084
+2021/03/30 15:25:45-INFO - Checkpoint 75 it not saved !
+Epoch 76/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (b
+Epoch 77/200: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss 
+Epoch 78/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (
+Epoch 79/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (
+Epoch 80/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (
+2021/03/30 15:33:51-INFO - Validation cross entropy: 2.6665242552757262
+2021/03/30 15:33:52-INFO - Checkpoint 80 it not saved !
+Epoch 81/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (
+Epoch 82/200: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 83/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (
+Epoch 84/200: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss 
+Epoch 85/200: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+2021/03/30 15:41:56-INFO - Validation cross entropy: 2.661982309818268
+2021/03/30 15:41:56-INFO - Previous Train: 0.8654844760894775 Valid: 2.6635196566581727!
+2021/03/30 15:41:56-INFO - Current  Train: 1.0191328525543213          Valid: 2.661982309818268!
+2021/03/30 15:41:56-INFO - Checkpoint 85 saved !
+Epoch 86/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 87/200: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 88/200: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 89/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (
+Epoch 90/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (
+2021/03/30 15:50:00-INFO - Validation cross entropy: 2.6543780744075773
+2021/03/30 15:50:00-INFO - Previous Train: 1.0191328525543213 Valid: 2.661982309818268!
+2021/03/30 15:50:00-INFO - Current  Train: 0.925452470779419          Valid: 2.6543780744075773!
+2021/03/30 15:50:00-INFO - Checkpoint 90 saved !
+Epoch 91/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 92/200: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 93/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (
+Epoch 94/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (
+Epoch 95/200: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+2021/03/30 15:58:04-INFO - Validation cross entropy: 2.6590941488742827
+2021/03/30 15:58:05-INFO - Checkpoint 95 it not saved !
+Epoch 96/200: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss 
+Epoch 97/200: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss 
+Epoch 98/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss
+Epoch 99/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (
+Epoch 100/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+2021/03/30 16:06:08-INFO - Validation cross entropy: 2.6637959480285645
+2021/03/30 16:06:09-INFO - Checkpoint 100 it not saved !
+Epoch 101/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss 
+Epoch 102/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (
+Epoch 103/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 104/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 105/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+2021/03/30 16:14:11-INFO - Validation cross entropy: 2.6653702735900877
+2021/03/30 16:14:11-INFO - Checkpoint 105 it not saved !
+Epoch 106/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 107/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss 
+Epoch 108/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (
+Epoch 109/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 110/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+2021/03/30 16:22:14-INFO - Validation cross entropy: 2.666115427017212
+2021/03/30 16:22:14-INFO - Checkpoint 110 it not saved !
+Epoch 111/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss 
+Epoch 112/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 113/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss 
+Epoch 114/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (
+Epoch 115/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss 
+2021/03/30 16:30:16-INFO - Validation cross entropy: 2.6677772283554075
+2021/03/30 16:30:17-INFO - Checkpoint 115 it not saved !
+Epoch 116/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss 
+Epoch 117/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss 
+Epoch 118/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss 
+Epoch 119/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss 
+Epoch 120/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss 
+2021/03/30 16:38:19-INFO - Validation cross entropy: 2.6649285793304442
+2021/03/30 16:38:19-INFO - Checkpoint 120 it not saved !
+Epoch 121/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 122/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss 
+Epoch 123/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (
+Epoch 124/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (
+Epoch 125/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+2021/03/30 16:46:22-INFO - Validation cross entropy: 2.6515023469924928
+2021/03/30 16:46:22-INFO - Previous Train: 0.925452470779419 Valid: 2.6543780744075773!
+2021/03/30 16:46:22-INFO - Current  Train: 1.0016640424728394          Valid: 2.6515023469924928!
+2021/03/30 16:46:22-INFO - Checkpoint 125 saved !
+Epoch 126/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 127/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 128/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 129/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (
+Epoch 130/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss (
+2021/03/30 16:54:25-INFO - Validation cross entropy: 2.6681813418865206
+2021/03/30 16:54:25-INFO - Previous Train: 1.0016640424728394 Valid: 2.6515023469924928!
+2021/03/30 16:54:25-INFO - Current  Train: 0.7251216173171997          Valid: 2.6681813418865206!
+2021/03/30 16:54:25-INFO - Checkpoint 130 saved !
+Epoch 131/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 132/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss 
+Epoch 133/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 134/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 135/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+2021/03/30 17:02:28-INFO - Validation cross entropy: 2.6654112458229067
+2021/03/30 17:02:28-INFO - Previous Train: 0.7251216173171997 Valid: 2.6681813418865206!
+2021/03/30 17:02:28-INFO - Current  Train: 1.0514252185821533          Valid: 2.6654112458229067!
+2021/03/30 17:02:28-INFO - Checkpoint 135 saved !
+Epoch 136/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 137/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss 
+Epoch 138/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 139/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss 
+Epoch 140/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss 
+2021/03/30 17:10:32-INFO - Validation cross entropy: 2.6591308534145357
+2021/03/30 17:10:32-INFO - Previous Train: 1.0514252185821533 Valid: 2.6654112458229067!
+2021/03/30 17:10:32-INFO - Current  Train: 1.1713392734527588          Valid: 2.6591308534145357!
+2021/03/30 17:10:32-INFO - Current  Train: 1.1713392734527588          Valid: 2.6591308534145357!
+2021/03/30 17:10:32-INFO - Checkpoint 140 saved !
+Epoch 141/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 142/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 143/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, loss 
+Epoch 144/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (
+Epoch 145/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss 
+2021/03/30 17:18:35-INFO - Validation cross entropy: 2.661478316783905
+2021/03/30 17:18:35-INFO - Checkpoint 145 it not saved !
+Epoch 146/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, loss (
+Epoch 147/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 148/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 149/200: 100%|████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (
+Epoch 150/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+2021/03/30 17:26:38-INFO - Validation cross entropy: 2.663119637966156
+2021/03/30 17:26:38-INFO - Checkpoint 150 it not saved !
+Epoch 151/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss 
+Epoch 152/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:27<00:00,  2.75img/s, loss 
+Epoch 153/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 154/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss 
+Epoch 155/200: 100%|█████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:25<00:00,  2.80img/s, loss 
+2021/03/30 17:34:45-INFO - Validation cross entropy: 2.657085973024368
+2021/03/30 17:34:46-INFO - Previous Train: 1.1713392734527588 Valid: 2.6591308534145357!
+2021/03/30 17:34:46-INFO - Current  Train: 0.8504194617271423          Valid: 2.657085973024368!
+2021/03/30 17:34:46-INFO - Checkpoint 155 saved !
+Epoch 156/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, los
+Epoch 157/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, los
+Epoch 158/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.82img/s, los
+Epoch 159/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, los
+Epoch 160/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:25<00:00,  2.82img/s, los
+2021/03/30 17:42:50-INFO - Validation cross entropy: 2.6710158705711367
+2021/03/30 17:42:51-INFO - Checkpoint 160 it not saved !
+Epoch 161/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, los
+Epoch 162/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, lo
+Epoch 163/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+Epoch 164/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+Epoch 165/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+2021/03/30 17:50:53-INFO - Validation cross entropy: 2.677416282892227
+2021/03/30 17:50:54-INFO - Checkpoint 165 it not saved !
+Epoch 166/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, los
+Epoch 167/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, lo
+Epoch 168/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, lo
+Epoch 169/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, lo
+Epoch 170/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, los
+2021/03/30 17:58:58-INFO - Validation cross entropy: 2.6681373715400696
+2021/03/30 17:58:59-INFO - Previous Train: 0.8504194617271423 Valid: 2.657085973024368!
+2021/03/30 17:58:59-INFO - Current  Train: 0.776495635509491          Valid: 2.6681373715400696!
+2021/03/30 17:58:59-INFO - Checkpoint 170 saved !
+Epoch 171/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, lo
+Epoch 172/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s,
+Epoch 173/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, los
+Epoch 174/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+Epoch 175/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+2021/03/30 18:07:02-INFO - Validation cross entropy: 2.678310936689377
+2021/03/30 18:07:03-INFO - Checkpoint 175 it not saved !
+Epoch 176/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, los
+Epoch 177/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, los
+Epoch 178/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, lo
+Epoch 179/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+Epoch 180/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, los
+2021/03/30 18:15:06-INFO - Validation cross entropy: 2.6729768395423887
+2021/03/30 18:15:07-INFO - Previous Train: 0.776495635509491 Valid: 2.6681373715400696!
+2021/03/30 18:15:07-INFO - Current  Train: 0.7746958136558533          Valid: 2.6729768395423887!
+2021/03/30 18:15:07-INFO - Checkpoint 180 saved !
+Epoch 181/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.86img/s, los
+Epoch 182/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, los
+Epoch 183/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, los
+Epoch 184/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+Epoch 185/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+2021/03/30 18:23:09-INFO - Validation cross entropy: 2.6603420257568358
+2021/03/30 18:23:10-INFO - Previous Train: 0.7746958136558533 Valid: 2.6729768395423887!
+2021/03/30 18:23:10-INFO - Current  Train: 1.0739045143127441          Valid: 2.6603420257568358!
+2021/03/30 18:23:10-INFO - Checkpoint 185 saved !
+Epoch 186/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, lo
+Epoch 187/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s,
+Epoch 188/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, los
+Epoch 189/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+Epoch 190/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+2021/03/30 18:31:12-INFO - Validation cross entropy: 2.6629216194152834
+2021/03/30 18:31:13-INFO - Checkpoint 190 it not saved !
+Epoch 191/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.87img/s, los
+Epoch 192/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, los
+Epoch 193/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+Epoch 194/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, lo
+Epoch 195/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, los
+ss (batch)=0.846]
+Epoch 197/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:23<00:00,  2.86img/s, loss (b.29]
+Epoch 198/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.84img/s, loss (b.98]
+Epoch 199/200: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (b.09]
+Epoch 200/200: 100%|███████████████████████████████████████████████████████████████████████████████████████████| 240/240 [01:24<00:00,  2.85img/s, loss (baimg/s, loss (batch)=0.912]
+2021/03/30 18:47:18-INFO - Validation cross entropy: 2.658052259683609
+2021/03/30 18:47:18-INFO - Previous Train: 0.8223929405212402 Valid: 2.6709818840026855!
+2021/03/30 18:47:18-INFO - Current  Train: 0.9115216135978699          Valid: 2.658052259683609!
+2021/03/30 18:47:18-INFO - Checkpoint 200 saved !    python model_predict.py -i data/raw/train/images/382.jpg -o output_test.png -m checkpoints/CP_epoch5.pnts/CP_epoch5.pth -s 0.1 -v^C➜  image_segmentation_pytorch git:(master) ✗
+(base) ➜  image_segmentation_pytorch git:(master) ✗ ^C
+(base) ➜  image_segmentation_pytorch git:(master) ✗ ^C
+(base) ➜  image_segmentation_pytorch git:(master) ✗ ^C
+(base) ➜  image_segmentation_pytorch git:(master) ✗  python model_predict.py -i data/raw/train/images/382.jpg -o output_test.png -m checkpoints/CP_epoch200nts/CP_epoch200.pth -s 0.1 -v
+2021/03/30 20:20:47-INFO - Starting Predict:
+        model:          checkpoints/CP_epoch200.pth
         input:          ['data/raw/train/images/382.jpg']
-        output:         ['output_test_GPU.png']
+        output:         ['output_test.png']
         viz:            True
         nosave:        False
         maskthreshold: 0.5
         scale:          0.1
 
-2021/03/29 10:03:39-INFO - Loading model checkpoints/CP_epoch5.pth
-2021/03/29 10:03:40-INFO - Using device cuda
-2021/03/29 10:03:41-INFO - Model loaded !
-2021/03/29 10:03:41-INFO - 
+2021/03/30 20:20:47-INFO - Loading model checkpoints/CP_epoch200.pth
+2021/03/30 20:20:47-INFO - Using device cuda
+2021/03/30 20:20:49-INFO - Model loaded !
+2021/03/30 20:20:49-INFO -
 Predicting image data/raw/train/images/382.jpg ...
-2021/03/29 10:03:43-INFO - Mask saved to output_test_GPU.png
-2021/03/29 10:03:43-INFO - Visualizing results for image data/raw/train/images/382.jpg, close to continue ...
-2021/03/29 10:03:48-INFO - Save imagepair at reports/predict/image_pair_jet.png
-2021/03/29 10:04:06-INFO - Save imageoverlay at reports/predict/sample.png
-(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_predict.py -i data/raw/train/images/002.jpg -o output_test_002_GPU.png -m checkpoioch5.pth -s 0.1 -v
-2021/03/29 10:04:54-INFO - Starting Predict:
-        model:          checkpoints/CP_epoch5.pth
-        input:          ['data/raw/train/images/002.jpg']
-        output:         ['output_test_002_GPU.png']
-        viz:            True
-        nosave:        False
-        maskthreshold: 0.5
-        scale:          0.1
-
-2021/03/29 10:04:54-INFO - Loading model checkpoints/CP_epoch5.pth
-2021/03/29 10:04:55-INFO - Using device cuda
-2021/03/29 10:04:56-INFO - Model loaded !
-2021/03/29 10:04:57-INFO - 
-Predicting image data/raw/train/images/002.jpg ...
-Traceback (most recent call last):
-  File "model_predict.py", line 167, in <module>
-    img = Image.open(fn)
-  File "D:\Miniconda3\lib\site-packages\PIL\Image.py", line 2904, in open
-    fp = builtins.open(filename, "rb")
-FileNotFoundError: [Errno 2] No such file or directory: 'data/raw/train/images/002.jpg'
-(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_predict.py -i data/raw/test/images/002.jpg -o output_test_002_GPU.png -m checkpoinch5.pth -s 0.1 -v
-2021/03/29 10:05:17-INFO - Starting Predict:
-        model:          checkpoints/CP_epoch5.pth
-        input:          ['data/raw/test/images/002.jpg']
-        output:         ['output_test_002_GPU.png']
-        viz:            True
-        nosave:        False
-        maskthreshold: 0.5
-        scale:          0.1
-
-2021/03/29 10:05:17-INFO - Loading model checkpoints/CP_epoch5.pth
-2021/03/29 10:05:18-INFO - Using device cuda
-2021/03/29 10:05:20-INFO - Model loaded !
-2021/03/29 10:05:20-INFO -
-Predicting image data/raw/test/images/002.jpg ...
-2021/03/29 10:05:21-INFO - Mask saved to output_test_002_GPU.png
-2021/03/29 10:05:21-INFO - Visualizing results for image data/raw/test/images/002.jpg, close to continue ...
-2021/03/29 10:05:27-INFO - Save imagepair at reports/predict/image_pair_jet.png
-2021/03/29 10:05:50-INFO - Save imageoverlay at reports/predict/sample.png
-(base) ➜  image_segmentation_pytorch git:(master) ✗
+2021/03/30 20:20:51-INFO - Mask saved to output_test.png
+2021/03/30 20:20:51-INFO - Visualizing results for image data/raw/train/images/382.jpg, close to continue ...
+2021/03/30 20:20:56-INFO - Save imagepair at reports/predict/image_pair_jet.png
+2021/03/30 20:21:30-INFO - Save imageoverlay at reports/predict/sample.png
