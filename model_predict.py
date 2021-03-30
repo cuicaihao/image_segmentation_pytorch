@@ -50,7 +50,6 @@ def predict_img(net,
 
     with torch.no_grad():
         output = net(img)
-
         if net.n_classes > 1:
             probs = F.softmax(output, dim=1)
         else:

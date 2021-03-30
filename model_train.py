@@ -51,7 +51,7 @@ dir_checkpoint = 'checkpoints/'
 LABEL_number = 23
 
 # DEBUG = True
-DEBUG = False
+DEBUG = True
 
 
 def train_net(net,
@@ -106,6 +106,8 @@ def train_net(net,
         optimizer, 'min' if net.n_classes > 1 else 'max', patience=2)
 
     if net.n_classes > 1:
+        # Ref: https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html
+        # The input is expected to contain raw, unnormalized scores for each class.
         criterion = nn.CrossEntropyLoss()
         # criterion = CrossEntropyLoss2d()
     else:
@@ -129,8 +131,7 @@ def train_net(net,
                 true_masks_temp = torch.squeeze(true_masks, dim=1)
 
                 masks_pred = net(imgs)
-                masks_pred = F.softmax(masks_pred, dim=1)
-
+                # masks_pred = F.softmax(masks_pred, dim=1)
                 # masks_pred = torch.argmax(masks_pred, dim=1)
                 loss = criterion(masks_pred, true_masks_temp)
 
@@ -164,8 +165,7 @@ def train_net(net,
                     if net.n_classes > 1:
                         logging.info(
                             'Validation cross entropy: {}'.format(val_score))
-                        # logging.info(
-                        # 'Validation Dice Coeff multilabel: {}'.format(val_score))
+                        # logging.info('Validation Dice Coeff multilabel: {}'.format(val_score))
                         writer.add_scalar('Loss/val', val_score, global_step)
                     else:
                         logging.info(
@@ -185,7 +185,6 @@ def train_net(net,
                             torch.long)  # same as true_masks
                         writer.add_images(
                             'masks/pred', masks_pred_temp, global_step)
-
         if save_cp:
             try:
                 os.mkdir(dir_checkpoint)
@@ -220,8 +219,7 @@ def eval_net(net, loader, device):
             if net.n_classes > 1:
                 true_masks = torch.squeeze(true_masks, dim=1)
                 tot += F.cross_entropy(mask_pred, true_masks).item()
-                # tot += dice_coeff_multilabel(true_masks,
-                #  mask_pred, LABEL_number)
+                # tot += dice_coeff_multilabel(true_masks, mask_pred, LABEL_number)
             else:
                 pred = torch.sigmoid(mask_pred)
                 pred = (pred > 0.5).float()

@@ -2,7 +2,7 @@
 
 Author: Caihao Cui
 
-Lastest Update Time: 28-Mar-2021
+Lastest Update Time: 29-Mar-2021
 
 Created Time: Sat 27-Mar-2021
 
@@ -10,10 +10,9 @@ This repo is on solving image segmentation task by building a convolutional neur
 
 ![feature Image](reports/figures/feature_image.jpg) 
  
-
 The basic function will be like: Y = f(X) 
 
-where X is a RGB image, Y is a mask image with intergers represent a number of objects.  
+where X is a RGB image, Y is a mask image with integers represent a number of objects.  
 
 - Review the [project organization](project_structure.txt) 
 - Find details on the [Tutorial.ipynb](Tutorial.ipynb)
@@ -116,7 +115,7 @@ In this case,  there are three labels missing labels in the dataset, they will b
 
 --------
  
-## Sample Preparation]
+## Sample Preparation
 
 The basic step of the model develop is to create a framework we can keep upgrading the design and bring new ideas into practices.
 Thus the `SegNet` contains the low level modules for this goals.
@@ -251,7 +250,7 @@ optional arguments:
 For example, you can use the following command for single image prediction:
 
 ```bash
-$ python model_predict.py -i data/raw/train/images/382.jpg -o output_test.png -m checkpoints/CP_epoch10.pth -s 0.1 -v
+$ python model_predict.py -i data/raw/train/images/382.jpg -o output_test.png -m checkpoints/CP_epoch5.pth -s 0.1 -v
 # logging information
 2021/03/28 18:37:41-INFO - Starting Predict:
         model:          checkpoints/CP_epoch10.pth
@@ -276,17 +275,79 @@ Predicting image data/raw/train/images/382.jpg ...
 
 You will find the output images at the `reprots/predict` folder.
 
-You can find the current model is clearly under-fitting. But it tends to classify the input image into two categories:
-- 0 : tree
-- 2 : other-vegetatio
+You can find the current model is clearly under-fitting. But it tends to classify the input image into categories w.r.t different colors.
 Thus, it is getting better.
 
 
+![Sample](reports/predict/cpu/image_pair_jet.png)
 
-![Sample](reports/predict/image_pair_jet.png)
-
-![Sample](reports/predict/sample.png)
+![Sample](reports/predict/cpu/sample.png)
  
+
+
+### GPU Experimental Results
+
+This repo is tested on PC with GTX1050Ti(4GB). Details can be found in the following [logs](reports/predict/gpu/gpu_training_log.txt).
+
+```bash
+python model_train.py -f models/CP_epoch10.pth
+>>
+2021/03/29 09:39:51-INFO - Using device cuda
+2021/03/29 09:39:51-INFO - Network:
+        3 input channels
+        23 output channels (classes)
+        Bilinear upscaling
+2021/03/29 09:39:53-INFO - Model loaded from models/CP_epoch10.pth
+2021/03/29 09:39:53-INFO - Creating dataset with 240 examples
+2021/03/29 09:39:53-INFO - Creating dataset with 80 examples
+2021/03/29 09:39:53-INFO - Starting training:
+        Epochs:          5
+        Batch size:      2
+        Learning rate:   0.01
+        Training size:   240
+        Validation size: 80
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.1
+
+Epoch 1/5:  50%|██████████████████████████████████████████▌                                          | 120/240 [00:46<00:41,  2.89img/s, loss (batc021/03/29 09:41:52-INFO - Validation Dice Coeff multilabel: 0.05903169760999596
+Epoch 1/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [02:41<00:00,  2.74img/s, loss (batc021/03/29 09:43:43-INFO - Validation Dice Coeff multilabel: 0.0592525490484915
+Epoch 1/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:51<00:00,  1.04img/s, loss (batc
+2021/03/29 09:43:44-INFO - Checkpoint 1 saved !
+...
+09:58:35-INFO - Validation Dice Coeff multilabel: 0.06039760107299125
+Epoch 5/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:35<00:00,  1.11img/s, loss (batc
+2021/03/29 09:58:35-INFO - Checkpoint 5 saved !
+ 
+# Use the GPU trained model for prediction
+✗ python model_predict.py -i data/raw/test/images/002.jpg -o output_test_002_GPU.png -m checkpoints/CP_epoch5.pth -s 0.1 -v
+2021/03/29 10:05:17-INFO - Starting Predict:
+        model:          checkpoints/CP_epoch5.pth
+        input:          ['data/raw/test/images/002.jpg']
+        output:         ['output_test_002_GPU.png']
+        viz:            True
+        nosave:        False
+        maskthreshold: 0.5
+        scale:          0.1
+
+2021/03/29 10:05:17-INFO - Loading model checkpoints/CP_epoch5.pth
+2021/03/29 10:05:18-INFO - Using device cuda
+2021/03/29 10:05:20-INFO - Model loaded !
+2021/03/29 10:05:20-INFO -
+Predicting image data/raw/test/images/002.jpg ...
+2021/03/29 10:05:21-INFO - Mask saved to output_test_002_GPU.png
+2021/03/29 10:05:21-INFO - Visualizing results for image data/raw/test/images/002.jpg, close to continue ...
+2021/03/29 10:05:27-INFO - Save imagepair at reports/predict/image_pair_jet.png
+2021/03/29 10:05:50-INFO - Save imageoverlay at reports/predict/sample.png
+```
+
+The output I used the test image 002, here are the results.
+
+
+![GPU Sample](reports/predict/gpu/image_pair_jet.png)
+
+![GPU Sample](reports/predict/gpu/sample.png)
+
 
 ## TensorBoard
 The `model_train` script used the `TensorBoard` to store all the training and validation records of the model development process.
@@ -349,6 +410,20 @@ tests/test_visualization.py::test_visualization PASSED                          
 
 - [PyTorch Docs https://pytorch.org/docs/stable/index.html](https://pytorch.org/docs/stable/index.html)
 - [Pillow Docs https://pillow.readthedocs.io/en/stable/index.html](https://pillow.readthedocs.io/en/stable/index.html)
+
+## Appendix 
+
+What defines a good DL/ML application?
+
+Personally speaking, a good application should contain the following features. 
+
+- Data: from data access (Security) and IO to sample selection/preparation.
+- Model: build / management / deployment (distribution).
+- Report: output formats and extra features / error analysis.
+
+The following figure shows all the details. 
+
+![docs/ImageSegmentationwithDeepLearning.png](docs/ImageSegmentationwithDeepLearning.png)
 
 
 ## The End
