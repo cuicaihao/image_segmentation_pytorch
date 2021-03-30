@@ -250,7 +250,7 @@ optional arguments:
 For example, you can use the following command for single image prediction:
 
 ```bash
-$ python model_predict.py -i data/raw/train/images/382.jpg -o output_test.png -m checkpoints/CP_epoch10.pth -s 0.1 -v
+$ python model_predict.py -i data/raw/train/images/382.jpg -o output_test.png -m checkpoints/CP_epoch5.pth -s 0.1 -v
 # logging information
 2021/03/28 18:37:41-INFO - Starting Predict:
         model:          checkpoints/CP_epoch10.pth
@@ -275,11 +275,8 @@ Predicting image data/raw/train/images/382.jpg ...
 
 You will find the output images at the `reprots/predict` folder.
 
-You can find the current model is clearly under-fitting. But it tends to classify the input image into two categories:
-- 0 : tree
-- 2 : other-vegetatio
+You can find the current model is clearly under-fitting. But it tends to classify the input image into categories w.r.t different colors.
 Thus, it is getting better.
-
 
 
 ![Sample](reports/predict/cpu/image_pair_jet.png)
@@ -321,27 +318,9 @@ Epoch 1/5: 100%|█████████████████████�
 09:58:35-INFO - Validation Dice Coeff multilabel: 0.06039760107299125
 Epoch 5/5: 100%|█████████████████████████████████████████████████████████████████████████████████████| 240/240 [03:35<00:00,  1.11img/s, loss (batc
 2021/03/29 09:58:35-INFO - Checkpoint 5 saved !
-(base) ➜  image_segmentation_pytorch git:(master) ✗ python model_predict.py -i data/raw/train/images/382.jpg -o output_test_GPU.png -m checkpoints/.pth -s 0.1 -v 
-2021/03/29 10:03:39-INFO - Starting Predict:     
-        model:          checkpoints/CP_epoch5.pth
-        input:          ['data/raw/train/images/382.jpg']
-        output:         ['output_test_GPU.png']
-        viz:            True
-        nosave:        False
-        maskthreshold: 0.5
-        scale:          0.1
-
-2021/03/29 10:03:39-INFO - Loading model checkpoints/CP_epoch5.pth
-2021/03/29 10:03:40-INFO - Using device cuda
-2021/03/29 10:03:41-INFO - Model loaded !
-2021/03/29 10:03:41-INFO - 
-Predicting image data/raw/train/images/382.jpg ...
-2021/03/29 10:03:43-INFO - Mask saved to output_test_GPU.png
-2021/03/29 10:03:43-INFO - Visualizing results for image data/raw/train/images/382.jpg, close to continue ...
-2021/03/29 10:03:48-INFO - Save imagepair at reports/predict/image_pair_jet.png
-2021/03/29 10:04:06-INFO - Save imageoverlay at reports/predict/sample.png
+ 
 # Use the GPU trained model for prediction
-✗ python model_predict.py -i data/raw/test/images/002.jpg -o output_test_002_GPU.png -m checkpoinch5.pth -s 0.1 -v
+✗ python model_predict.py -i data/raw/test/images/002.jpg -o output_test_002_GPU.png -m checkpoints/CP_epoch5.pth -s 0.1 -v
 2021/03/29 10:05:17-INFO - Starting Predict:
         model:          checkpoints/CP_epoch5.pth
         input:          ['data/raw/test/images/002.jpg']
